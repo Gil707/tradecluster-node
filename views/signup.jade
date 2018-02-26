@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    div.row
+        div.col-lg-1
+        div.col-lg-3
+            h1 Signup
+            form(method='POST', action='/users/signup')
+                div.form-group.form-group-sm
+                    label Login:
+                    input.form-control(name='login', type='text')
+                div.form-group.form-group-sm
+                    label Password:
+                    input.form-control(name='password', type='password')
+                div.form-group.form-group-sm
+                    label Confirm:
+                    input.form-control(name='password2', type='password')
+                div.form-group.form-group-sm
+                    label Name:
+                    input.form-control(name='name', type='text')
+                div.form-group.form-group-sm
+                    label Email:
+                    input.form-control.small(name='email', type='text')
+                br
+                input.btn.btn-primary.btn-sm(type='submit', value='Signup')

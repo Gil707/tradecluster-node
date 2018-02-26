@@ -1,0 +1,233 @@
+body {
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    background-image: url(/img/bg.png);
+    background-repeat: repeat-x;
+
+}
+
+.navbar-nav li a {
+    color: #EEEEEE;
+    font-weight: bold;
+}
+
+.navbar-nav li a:hover {
+    color: #0f74a8;
+    font-weight: bold;
+}
+
+.navbar-nav li a:active {
+    color: #0f74a8;
+    font-weight: bold;
+}
+
+.mybar {
+    /*background-color: #286090;*/
+    background-color:rgba(40, 96, 144, 1);
+    /*transition: .5s;*/
+    border-radius: 0;
+}
+
+/*.mybar:hover {*/
+    /*background-color:rgba(40, 96, 144, 1);*/
+    /*transition: .5s;*/
+    /*border-radius: 0;*/
+/*}*/
+
+.navbar-brand {
+    color: white;
+}
+.navbar-brand:hover {
+    color: #66afe9;
+}
+
+.hiuser {
+    top: 13px;
+    right: 10px;
+}
+
+.alert-error{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.alert-success_msg{
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.hint {
+    color: #1b6d85;
+    font-size: 11px;
+    margin-left: 5px;
+}
+
+.recieving {
+    color: #31b0d5;
+    font-size: 13px;
+}
+.cur_course {
+    color: lightgray;
+    font-size: 13px;
+}
+
+.form-group-sm {
+    margin-top: 6px;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
+
+.container-fluid {
+    padding-left: 26px;
+    padding-right: 20px;
+}
+
+.navbar .divider-vertical {
+    height: 24px;
+    margin: 0 9px;
+    margin-top: 12px;
+    border-left: 1px dotted #c9cccf;
+}
+
+.dropdown-menu li a {
+    color: #0f74a8;
+}
+
+.dropdown a:focus {
+    color: #0f74a8;
+}
+
+.post-date {
+    color: #45c9dd;
+    font-size: 10px;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #0f74a8;
+    color: #e8f2ff;
+}
+
+.crs_timehead {
+    color: #0f74a8;
+    font-size: 12px;
+}
+.crs_itm_val {
+    font-size: 12px;
+    color: #1b6d85;
+}
+
+.botblock {
+    margin-left: 10px;
+    margin-right: 2px;
+    width: 212px;
+}
+
+/*.usr-money-header {*/
+    /*font-size: 10px;*/
+    /*color: #e8f2ff;*/
+    /*font-weight: bold;*/
+    /*margin-left: 5px;*/
+/*}*/
+
+.subbots-link {
+    color: #34c4da;
+}
+
+.subbots-span {
+    font-size: 14px;
+    color: #34c4da;
+}
+
+.botcode {
+    font-family: "Courier New", sans-serif;
+    color: forestgreen;
+}
+
+.minilogo {
+    margin-top: 8px;
+    margin-right: 12px;
+}
+
+.minilogo:hover {
+    cursor: pointer;
+    -webkit-animation: rotating 2s linear infinite;
+    -moz-animation: rotating 2s linear infinite;
+    -ms-animation: rotating 2s linear infinite;
+    -o-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+    from {
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotating {
+    from {
+        -ms-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+.botcfg-block {
+    font-family: "Courier New", sans-serif;
+    font-size: 12px;
+
+}
+.botlink-h4 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.freeblock {
+    color:forestgreen;
+    cursor: pointer;
+}
+.freeblock:hover {
+    text-decoration: underline;
+}
+
+.chargeableblock {
+    color:red;
+    cursor: pointer;
+}
+.chargeableblock:hover {
+    text-decoration: underline;
+}
+
+.botconf-text {
+    white-space: pre-wrap;
+    color: forestgreen;
+    border-left: 2px dotted #ABABAB;
+    padding: 8px;
+    margin-left: 8px;
+}
+
+.backtobotcfs {
+    font-size: smaller;
+}
+
+.backtobotcfs:hover {
+    text-decoration: none;
+}

@@ -1,0 +1,83 @@
+doctype html
+html
+  head
+    title TradeCluster
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway')
+    link(rel='stylesheet' href='/css/bootstrap.css')
+    link(rel='stylesheet' href='/css/style.css')
+  body
+    nav.navbar.mybar
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          img(src='/img/logo-sm.png' height=32).pull-left.minilogo
+          a.navbar-brand(href='/') TradeCluster
+        #navbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/') Home
+            li
+              a(href='/faq') FAQ
+            li
+              a(href='/about') About
+            if user
+              li.divider-vertical
+              li
+                a(href='/strategies') Strategies
+              li
+                a(href='/analyzes') Analyzes
+              li
+                a(href='/botconfigs') Bot configs
+            if (user)
+              if (user.status === 3 || user.status === 4)
+                li.divider-vertical
+                li.dropdown
+                  a(href='#', data-toggle='dropdown').dropdown-toggle Control panel
+                    b.caret
+                  ul.dropdown-menu
+                    li
+                      a(href='/posts/add') Posts
+                    li
+                      a(href='/strategies') Strategies
+                    li
+                      a(href='/botconfigs/admin') Bot configs
+                    if (user.status === 4)
+                      li.divider
+                      li
+                        a(href='/users') Users
+                      li
+                        a(href='/editor') Data editor
+
+          ul.nav.navbar-nav.navbar-right
+            if user
+              li.hiuser
+                span.label.label-primary Hi #{user.name}
+                span.label.label-info #{user.balance} $
+              li
+                a(href='/profile') Profile
+              li
+                a(href='/users/logout') Logout
+            else
+              li
+                a(href='/users/signup') Register
+              li
+                a(href='/users/login') Login
+    .container-fluid
+      != messages('message', locals)
+      if errors
+        each error, i in errors
+          div(class="alert alert-danger") #{error.msg}
+      block content
+      br
+      hr
+      footer#tfooter
+        p Copyright &copy; 2018 by Gil
+    script(src='/js/jquery.js')
+    script(src='/js/bootstrap.js')
+    script(src='http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js')
+    script(src='http://threejs.org/examples/js/libs/stats.min.js')
+    script(src='/js/main.js')

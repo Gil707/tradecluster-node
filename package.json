@@ -1,0 +1,33 @@
+{
+  "name": "TradeCluster",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "~1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "compression": "^1.7.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "~1.4.3",
+    "cryptr": "^3.0.0",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "express-fileupload": "^0.4.0",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.0.1",
+    "jade": "~1.11.0",
+    "mkdirp": "^0.5.1",
+    "mongoose": "^5.0.6",
+    "morgan": "~1.9.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "recaptcha": "^1.2.1",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "serve-favicon": "~2.4.5"
+  }
+}

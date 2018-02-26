@@ -1,0 +1,53 @@
+extends layout
+
+block content
+    div.row
+        div.col-lg-6
+            div.panel.panel-default
+                div.panel-heading
+                    span: b Posts
+                div.panel-body
+                    ul.list-group
+                        each post, i in posts
+                            li.list-group-item
+                                h4 #{post.caption}
+                                    i.pull-right.post-date #{post.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                                p!= post.preview
+                                if (user)
+                                    a(href="/posts/" + post._id) Learn more...
+                                else
+                                    span.label.label-danger Please Login to view more...
+        div.col-lg-4
+            div.panel.panel-default
+                div.panel-heading
+                    span: b News
+                div.panel-body
+                        ul.list-group
+                            each news, i in newsblock
+                                li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
+                                    h4 #{news.title}
+                                    i.post-date Parsed at #{news.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                                    p!= news.preview
+                                    if (news.img)
+                                        img(src=news.img, height='120', style='margin-bottom: 8px;')
+                                    if (user)
+                                        div.hint Resource:
+                                            b &nbsp;#{news.resource}
+                                        div.hint Origin time and author: #{news.time}
+                                        br
+                                        a(href=news.link, target='_blank') View original...
+                                    else
+                                        br
+                                        div.label.label-danger Please Login to view more...
+
+        div.col-lg-2
+            div.panel.panel-default
+                div.panel-heading
+                    span: b Courses
+                div.panel-body
+                    img(src='/img/logo.png' width='100')
+                    br
+                    if (user)
+                        div#courses
+                    else
+                        span.label.label-danger Please Login to view more...

@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+    h2 Bot configs
+    p There are several supported bots with our custom configurations.
+        span(style='color:red; font-size: 14px;font-weight: bold') &nbsp;Please use it at your own risk!
+    div.row
+            div.panel.panel-default.pull-left.botblock
+                div.panel-heading
+                    a(href='/botconfigs/gekko')
+                        img(src='/img/bots/gekko.png' height='240')
+                div.panel-body
+                    h3: a(href='/botconfigs/gekko') Gekko software
+                    p is a opensource Bitcoin TA trading and backtesting platform that connects to popular Bitcoin exchanges. It is written in JavaScript and runs on Node.js.
+                    a(href='https://gekko.wizb.it/') Visit website...
+            div.panel.panel-default.pull-left.botblock
+                div.panel-heading
+                    a(href='/botconfigs/haas')
+                        img(src='/img/bots/haas.png' height='240')
+                div.panel-body
+                    h3: a(href='/botconfigs/gekko') Haas online
+                    p Haasbot is the premier bitcoin trade bot, which automated bitcoin and cryptocurrency trades. It utilizes advanced technical analysis indicators and more!
+                    a(href='https://www.haasonline.com/') Visit store...

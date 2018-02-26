@@ -1,0 +1,62 @@
+extends ../layout
+
+block content
+    h2 Haas
+        span.subbots-span &nbsp; [
+            a(href='/botconfigs/gekko').subbots-link Gekko
+            span ,&nbsp;
+            a(href='/botconfigs/gimmer').subbots-link Gimmer
+            span ,&nbsp;
+            a(href='/botconfigs/cryptophp').subbots-link Crypto-PHP
+            span ,&nbsp;
+            a(href='/botconfigs/cat').subbots-link C.A.T.
+            span ]
+    div.row
+        div.col-lg-8
+            h3 Configurations/strategies
+            h5.pull-right Please see&nbsp;
+                a(href='/botconfigs/manual'): b instructions
+                span &nbsp;to install configs
+            br
+            if (haascfgs.length > 0)
+                h4(id='freeblock'): b.freeblock Free
+                    span(id='freeblock-hint').hint click to view
+                ul(id='freeblock-list', style='display:block').list-group
+                    each haascfg, i in haascfgs
+                        li.list-group.list-unstyled
+                            a(href='/botconfigs/'+haascfg._id): h5.list-group-item-heading.text-capitalize: b #{haascfg.name}
+                                i.pull-right.post-date #{haascfg.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                            p.list-group-item!= haascfg.preview
+                            a(href='/botconfigs/'+haascfg._id).btn-sm.btn-info View...
+            else
+                br
+                h4 There are no free strategies yet. Visit us later...
+
+            hr
+
+            if (haascfgs_p.length > 0)
+                h4(id='chargeableblock'): b.chargeableblock Chargeable
+                    span(id='chargeableblock-hint').hint click to view
+                ul(id='chargeableblock-list', style='display:none').list-group
+                    each haascfg_p, i in haascfgs_p
+                        li.list-group.list-unstyled
+                            h5.list-group-item-heading.text-capitalize: b #{haascfg_p.name}
+                                i.pull-right.post-date #{haascfg_p.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                            p.list-group-item!= haascfg_p.preview
+                            a(href='#').btn-sm.btn-success Buy for
+                                b &nbsp;#{haascfg_p.cost} $
+            else
+                br
+                h4 There are no chargeable strategies yet. Visit us later...
+
+        div.col-lg-4
+            h3 Description
+            p
+                b Haasbot&nbsp;
+                span is a bitcoin bot that automatically trades for you. Our bitcoin bot can allow you to automate bitcoin trades using technical analysis indicators.
+
+            p: b Use Haas at your own risk.
+
+            img(src='https://affiliatebitcoins.com/wp-content/uploads/2018/02/haasonline-review.jpg' width='400')
+
+            h5: a(href='https://www.haasonline.com/pricing/') Read more...

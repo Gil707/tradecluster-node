@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+
+    //h1 #{title}
+    form(method='POST', action='/posts/add')
+        div.row
+            div.col-lg-7
+                h2 Add post
+                div.form-group-sm
+                    label Caption:
+                    input.form-control(type='text', name='caption')
+                div.form-group-sm
+                    label Preview:
+                    textarea.form-control(name='preview', id='post-preview', style='height: 80px')
+                div.form-group-sm
+                    label Additional text:
+                    textarea.form-control(name='text', id='post-text')
+                br
+                input.btn.btn-primary(type='submit', value='Submit')
+            div.col-lg-5
+                h2 My recent posts
+                table
+
+    script(src='/js/ckeditor/ckeditor.js')
+    script.
+        CKEDITOR.replace('post-text', {
+            toolbar: 'Full',
+        })
+    script.
+        CKEDITOR.replace('post-preview', {
+            toolbar: 'Basic'
+        })

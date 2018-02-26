@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+    if (user)
+        div.row
+            div.col-lg-8
+                h2.text-capitalize
+                    a(href='javascript:history.back()').glyphicon.glyphicon-arrow-left.backtobotcfs
+                    span &nbsp; #{botcfg.name}
+                h4.text-capitalize For&nbsp;
+                    b= botcfg.bot
+                div.hint= botcfg.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')
+                h5 Preview
+                p.botconf-text= botcfg.preview
+                h5 Body
+                p.botconf-text= botcfg.body
+
+                if (botcfg.arclink)
+                    div
+                        a(href='/getcfg/' + botcfg.arclink) Download file
+                br
+                h5.label.label-info Added by&nbsp;
+                    b #{username}
+                if (user && user.status > 2)
+                    if user._id === botcfg.author
+                        a.btn.btn-default(href='/botconfigs/edit/'+botcfg._id) Edit
+                        a.btn.btn-danger.delete-post(href='#', data-id=botcfg._id) Delete
+            div.col-lg-offset-4
+    else
+        a.btn-sm.btn-default(href='/users/login') Please login to view details.

@@ -1,0 +1,52 @@
+extends ../layout
+
+block content
+
+    //h1 #{title}
+    form(method='POST', action='/botconfigs/add', encType='multipart/form-data')
+        div.row
+            div.col-lg-4
+                h2 Add config
+                div.form-group-sm
+                    label Bot:
+                    select.form-control(name='bot')
+                        option(value="gekko") Gekko
+                        option(value="haas") Haas
+                div.form-group-sm
+                    label Name:
+                    input.form-control(type='text', name='name')
+                div.form-group-sm
+                    label Preview text:
+                    textarea.form-control(name='preview', rows='5').botcode
+                div.form-group-sm
+                    label Body text:
+                    br
+                    span.hint [parameter] = value
+                    textarea.form-control(name='body', rows='15').botcode
+                div.form-group-sm
+                    label Archive:&nbsp;
+                        span.hint (zip,rar)
+                    input(type='file', name='arclink')
+                div.form-group-sm
+                    label Cost: &nbsp;
+                        span.hint (Leave empty for free)
+                    input.form-control(type='number' name='cost')
+                br
+                input.btn.btn-primary(type='submit', value='Add')
+            div.col-lg-8
+                h2 Stored strategies
+                br
+                ul.list-group
+                    each config, i in configs
+                        li.list-group-item.botcfg-block
+                            a(href="/botconfigs/" + config._id).text-capitalize.botlink-h4 #{config.name}
+                            span.hint.text-capitalize [#{config.bot}]
+                                i.pull-right.post-date #{config.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                            div #{config.preview}
+                            if (config.cost > 0)
+                                span.label.label-info Price: #{config.cost} $
+                                br
+                            br
+                            a.btn-sm.btn-default(href='/botconfigs/edit/' + config._id) Edit
+                            i &nbsp;
+                            a.btn-sm.btn-danger(href='/botconfigs/delete/' + config._id) Delete
