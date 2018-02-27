@@ -1,0 +1,17 @@
+{
+  "apps": [
+    {
+      "name": "TradeCluster app",
+      "script": "app.js",
+      "instances": "-1",
+      "exec_mode": "cluster"
+//      "exec_mode": "fork"
+    },
+    {
+      "name": "TradeCluster newsparser",
+      "script": "./components/newsparser.js",
+      "watch": true,
+      "exec_mode": "fork"
+    }
+  ]
+}

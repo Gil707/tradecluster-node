@@ -4,8 +4,10 @@ block content
     if (user)
         div.row
             div.col-lg-8
+                a(href='javascript:history.back()').glyphicon.glyphicon-arrow-left.backtobotcfs &nbsp;
                 h1= post.caption
                 hr
+                p!= post.preview
                 p!= post.text
                 hr
                 h5.label.label-info Written by &nbsp;

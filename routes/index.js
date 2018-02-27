@@ -7,6 +7,8 @@ let Post = require('../models/post');
 let News = require('../models/news');
 
 
+
+
 // /* GET home page. */
 // router.get('/', function(req, res, next) {
 //   res.render('index', { title: 'Express' });
@@ -33,13 +35,14 @@ router.get('/', function (req, res) {
                         } else {
                             res.render('index', {
                                 posts: posts,
-                                newsblock: newsblock
+                                // newsblock: newsblock
                             });
                         }
                     });
             }
         });
 });
+
 router.get('/about', function (req, res, next) {
     res.render('site/about');
 });

@@ -54,8 +54,14 @@ function loadBTCCourses() {
     });
 }
 
+function loadNews() {
+    $('#news-div').load('/news/refresh');
+}
+
 loadBTCCourses();
+loadNews();
 
 setInterval(function () {
     loadBTCCourses();
-}, 5000);
+    loadNews();
+}, 10000);

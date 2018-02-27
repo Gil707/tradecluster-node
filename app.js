@@ -9,30 +9,16 @@ const passport = require('passport');
 const config = require('./config/database');
 const compression = require('compression');
 const cp = require("child_process");
+const MongoStore = require('connect-mongo')(session);
 
-const cluster = require('cluster');
-
-if (cluster.isMaster) {
-
-    let child = cp.fork(`${__dirname}/components/newsparser.js`);
-
-    // Count the machine's CPUs
-    let cpuCount = require('os').cpus().length;
-
-    // Create a worker for each CPU
-    for (let i = 0; i < cpuCount; i += 1) {
-        cluster.fork();
-    }
-
-// Code to run if we're in a worker process
-} else {
+const APP_PORT = 3000;
 
     mongoose.connect(config.database);
     let db = mongoose.connection;
 
 // Check connection
     db.once('open', function () {
-        console.log('Worker ' + cluster.worker.id + ': Connected to MongoDB');
+        console.log('Connected to MongoDB');
     });
 
 // Check for DB errors
@@ -64,6 +50,7 @@ if (cluster.isMaster) {
 // Express Session Middleware
     app.use(session({
         secret: 'qwerty123',
+        store: new MongoStore({ mongooseConnection: mongoose.connection }),
         resave: true,
         saveUninitialized: true
     }));
@@ -107,6 +94,7 @@ if (cluster.isMaster) {
     let strategies = require('./routes/strategies');
     let botconfigs = require('./routes/botconfigs');
     let analyzes = require('./routes/analyzes');
+    let news = require('./routes/news');
 
     app.use('/', index);
     app.use('/posts', posts);
@@ -114,19 +102,12 @@ if (cluster.isMaster) {
     app.use('/strategies', strategies);
     app.use('/botconfigs', botconfigs);
     app.use('/analyzes', analyzes);
+    app.use('/news', news);
 
-// Start Server
-    app.listen(3000, function () {
-        console.log('Worker ' + cluster.worker.id + ': Server started on port 3000...');
+
+    app.listen(APP_PORT, function () {
+        console.log('Server started on port ' + APP_PORT + '...');
     });
-}
 
-cluster.on('exit', function (worker) {
 
-    // Replace the dead worker
-    console.log('Worker %d died :(', worker.id);
-    cluster.fork();
-
-});
-
-// let child = cp.fork(`${__dirname}/components/newsparser.js`);
+    // let child = cp.fork(`${__dirname}/components/newsparser.js`);

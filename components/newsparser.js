@@ -33,8 +33,7 @@ function parseCoindesk() {
 
             let news = new News();
 
-
-            news.title = block.find('a.standard-format-icon').attr('title');
+            news.title = block.find('a.fade').text();
             news.img = block.find('img.wp-post-image').attr('data-cfsrc');
             news.link = block.find('a.standard-format-icon').attr('href');
             news.preview = block.find('p').last().text();

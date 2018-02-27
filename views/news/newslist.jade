@@ -1,0 +1,17 @@
+ul.list-group
+    each news, i in newsblock
+        li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
+            h4 #{news.title}
+            i.post-date Parsed at #{news.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+            p!= news.preview
+            if (news.img)
+                img(src=news.img, height='120', style='margin-bottom: 8px;')
+            if (user)
+                div.hint Resource:
+                    b &nbsp;#{news.resource}
+                div.hint Origin time and author: #{news.time}
+                br
+                a(href=news.link, target='_blank') View original...
+            else
+                br
+                div.label.label-danger Please Login to view more...
