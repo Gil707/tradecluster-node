@@ -10,4 +10,10 @@ router.get('/', auth.ensureAuthenticated, function(req, res){
     });
 });
 
+router.get('/data/cci', auth.ensureAuthenticated, function(req, res){
+    res.render('strategy/data/cci', {
+        user: req.user
+    });
+});
+
 module.exports = router;
