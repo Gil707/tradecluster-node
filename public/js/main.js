@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('#delete-post').on('click', function (e) {
         $target = $(e.target);
         const id = $target.attr('data-id');
@@ -57,6 +58,8 @@ function loadBTCCourses() {
 function loadNews() {
     $('#news-div').load('/news/refresh');
 }
+
+
 
 loadBTCCourses();
 loadNews();

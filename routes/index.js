@@ -23,22 +23,14 @@ router.get('*', function (req, res, next) {
 router.get('/', function (req, res) {
     Post.find({})
         .sort('-created_at')
+        .limit(10)
         .exec(function (err, posts) {
             if (err) {
                 console.log(err);
             } else {
-                News.find({})
-                    .sort('-created_at')
-                    .exec(function (err, newsblock) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            res.render('index', {
-                                posts: posts,
-                                // newsblock: newsblock
-                            });
-                        }
-                    });
+                res.render('index', {
+                    posts: posts
+                });
             }
         });
 });

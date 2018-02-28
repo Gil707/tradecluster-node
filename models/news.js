@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 ObjectId = mongoose.Types.ObjectId;
+//
+// mongoosePaginate.paginate.options = {
+//     lean:  true,
+//     limit: 6
+// };
 
 // News Schema
 let newsSchema = mongoose.Schema({
@@ -34,5 +40,7 @@ let newsSchema = mongoose.Schema({
         default: Date.now
     },
 });
+
+newsSchema.plugin(mongoosePaginate);
 
 let News = module.exports = mongoose.model('News', newsSchema);

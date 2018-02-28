@@ -86,7 +86,6 @@ const APP_PORT = 3000;
     app.use(passport.initialize());
     app.use(passport.session());
 
-
 // Route Files
     let index = require('./routes/index');
     let posts = require('./routes/posts');
@@ -103,7 +102,6 @@ const APP_PORT = 3000;
     app.use('/botconfigs', botconfigs);
     app.use('/analyzes', analyzes);
     app.use('/news', news);
-
 
     app.listen(APP_PORT, function () {
         console.log('Server started on port ' + APP_PORT + '...');

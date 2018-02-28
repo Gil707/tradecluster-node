@@ -33,9 +33,9 @@ function parseCoindesk() {
 
             let news = new News();
 
-            news.title = block.find('a.fade').text();
+            news.title = block.find('div.post-info').find('a.fade').text();
             news.img = block.find('img.wp-post-image').attr('data-cfsrc');
-            news.link = block.find('a.standard-format-icon').attr('href');
+            news.link = block.find('a.fade').attr('href');
             news.preview = block.find('p').last().text();
             news.time = block.find('p').first().text();
             news.resource = 'coindesk.com';
