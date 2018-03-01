@@ -10,13 +10,15 @@ block content
                     ul.list-group
                         each post, i in posts
                             li.list-group-item
-                                h4 #{post.caption}
-                                    i.pull-right.post-date #{post.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                                i.pull-right.post-date #{post.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                                h3: b #{post.caption}
                                 p!= post.preview
                                 if (user)
                                     a(href="/posts/" + post._id) Learn more...
                                 else
                                     span.label.label-danger: a(href='/users/login').tologin Please Login to view more...
+                    div
+                        a(href='/posts/all'): b More posts...
         div.col-lg-4
             div.panel.panel-default
                 div.panel-heading

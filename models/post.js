@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 ObjectId = mongoose.Types.ObjectId;
+
+mongoosePaginate.paginate.options = {
+    lean:  true,
+    limit: 10
+};
 
 // Post Schema
 let postSchema = mongoose.Schema({
@@ -23,5 +29,7 @@ let postSchema = mongoose.Schema({
         default: Date.now
     },
 });
+
+postSchema.plugin(mongoosePaginate);
 
 let Post = module.exports = mongoose.model('Post', postSchema);

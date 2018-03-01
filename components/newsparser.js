@@ -118,4 +118,4 @@ function parseCryptopotato() {
 setInterval(function () {
     parseCoindesk();
     parseCryptopotato();
-}, 30000);
+}, 60000);

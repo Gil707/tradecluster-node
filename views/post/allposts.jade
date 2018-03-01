@@ -1,0 +1,55 @@
+extends ../layout
+
+block content
+    h2 Posts
+    div.row
+        div.col-lg-8
+            div
+                h5 Pages:
+                if (page_id > pagesarr[0])
+                    a(href='/posts/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
+                    span &nbsp;&nbsp;
+                else
+                    span.hint.glyphicon.glyphicon-arrow-left(style='color:lightgray')
+                    span &nbsp;&nbsp;
+                each page, i in pagesarr
+                    if (page == page_id)
+                        span: b #{page}&nbsp;
+                    else
+                        span: a(href='/posts/all/page/' + page)= page
+                        span &nbsp;
+                if (page_id < pagesarr.length)
+                    a(href='/posts/all/page/' + (parseInt(page_id)+1)): span.hint.glyphicon.glyphicon-arrow-right
+                else
+                    span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
+
+            ul.list-group
+            each post, i in allposts
+                li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
+                    i.pull-right.post-date #{post.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                    h3: b #{post.caption}
+                    p!= post.preview
+                    if (user)
+                        a(href="/posts/" + post._id) Learn more...
+                    else
+                        span.label.label-danger: a(href='/users/login').tologin Please Login to view more...
+
+            div
+                h5 Pages:
+                    if (page_id > pagesarr[0])
+                        a(href='/posts/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
+                        span &nbsp;
+                    else
+                        span.hint.glyphicon.glyphicon-arrow-left(style='color:lightgray')
+                        span &nbsp;&nbsp;
+                    each page, i in pagesarr
+                        if (page == page_id)
+                            span: b #{page}&nbsp;
+                        else
+                            span: a(href='/posts/all/page/' + page)= page
+                            span &nbsp;
+                    if (page_id < pagesarr.length)
+                        a(href='/posts/all/page/' + (parseInt(page_id) + 1)): span.hint.glyphicon.glyphicon-arrow-right
+                    else
+                        span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
+        div.col-lg-4

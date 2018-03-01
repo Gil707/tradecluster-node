@@ -7,6 +7,36 @@ let Post = require('../models/post');
 // User Model
 let User = require('../models/user');
 
+router.get('/all', function (req, res) {
+    res.redirect('/posts/all/page/1')
+});
+
+
+router.get('/all/page/:id', function (req, res) {
+
+    Post.paginate({}, {page: req.params.id, sort: '-created_at'}).then(function (result, err) {
+        if (!err) {
+
+            console.log(result.pages);
+
+            let pagesarr = [];
+            for(let i = 1; i <= result.pages; i++) {
+                pagesarr.push(i)
+            }
+
+            res.render('post/allposts', {
+                allposts: result.docs,
+                pagesarr: pagesarr,
+                page_id: req.params.id
+            });
+
+        } else {
+            console.log(err);
+            res.end('Error');
+        }
+    });
+});
+
 // Add Route
 router.get('/add', auth.ensureAuthenticated, function (req, res) {
     Post.find({})

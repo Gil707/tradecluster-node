@@ -23,7 +23,7 @@ router.get('*', function (req, res, next) {
 router.get('/', function (req, res) {
     Post.find({})
         .sort('-created_at')
-        .limit(10)
+        .limit(6)
         .exec(function (err, posts) {
             if (err) {
                 console.log(err);

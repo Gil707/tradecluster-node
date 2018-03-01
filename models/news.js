@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 ObjectId = mongoose.Types.ObjectId;
-//
-// mongoosePaginate.paginate.options = {
-//     lean:  true,
-//     limit: 6
-// };
+
+mongoosePaginate.paginate.options = {
+    lean:  true,
+    limit: 20
+};
 
 // News Schema
 let newsSchema = mongoose.Schema({

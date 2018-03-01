@@ -1,7 +1,7 @@
 ul.list-group
     each news, i in newsblock
         li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
-            h4 #{news.title}
+            h4: b #{news.title}
             i.post-date Parsed at #{news.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
             p!= news.preview
             if (news.img)
@@ -16,4 +16,4 @@ ul.list-group
                 br
                 span.label.label-danger: a(href='/users/login').tologin Please Login to view more...
 div
-    a(href='/news/all') More news...
+    a(href='/news/all'): b More news...
