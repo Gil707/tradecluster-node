@@ -2,7 +2,7 @@ doctype html
 html
   head
     title TradeCluster
-    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway:300')
     link(rel='stylesheet' href='/css/bootstrap.css')
     link(rel='stylesheet' href='/css/style.css')
   body
@@ -77,11 +77,12 @@ html
       if errors
         each error, i in errors
           div(class="alert alert-danger") #{error.msg}
-      block content
-      br
-      hr
+      div.white-text
+        block content
+        br
+        hr
       footer#tfooter
-        p Copyright &copy; 2018 by Gil
+        p.white-text.hint Copyright &copy; 2018 by Codecustoms
     script(src='/js/jquery.js')
     script(src='/js/bootstrap.js')
     script(src='http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js')

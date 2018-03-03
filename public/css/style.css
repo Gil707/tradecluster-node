@@ -1,9 +1,20 @@
 body {
     padding: 0;
     font-family: 'Raleway', sans-serif;
-    background-image: url(/img/bg.png);
-    background-repeat: repeat-x;
+    /*background-image: url(/img/bg.png);*/
+    background-color: #3d3d5c;
+    /*background-repeat: repeat-x;*/
 
+}
+
+a {
+    color: #b3b3cc;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #c2c2d6;
+    text-decoration: underline;
 }
 
 .navbar-nav li a {
@@ -13,6 +24,7 @@ body {
 
 .navbar-nav li a:hover {
     color: #0f74a8;
+    /*background-color: #47476b;*/
     font-weight: bold;
 }
 
@@ -23,9 +35,11 @@ body {
 
 .mybar {
     /*background-color: #286090;*/
-    background-color: rgba(40, 96, 144, 1);
+    background-color: #47476b;
     /*transition: .5s;*/
     border-radius: 0;
+    font-weight: 100;
+    border-bottom: 1px solid #29293d;
 }
 
 /*.mybar:hover {*/
@@ -85,8 +99,8 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 .container-fluid {
-    padding-left: 26px;
-    padding-right: 20px;
+    padding-left: 28px;
+    padding-right: 28px;
 }
 
 .navbar .divider-vertical {
@@ -251,4 +265,70 @@ h1, .h1, h2, .h2, h3, .h3 {
 
 .margin-bottom {
     margin-bottom: 5px;
+}
+
+.col-lg-6, .col-lg-2, .col-lg-4 {
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+.navbar {
+    margin-bottom: 8px;
+    margin-top: 2px;
+}
+
+.white-text {
+    color: white;
+}
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    background-color: #33334d;
+    border: 1px solid #47476b;
+}
+
+.panel {
+    margin-bottom: 5px;
+    background-color: #33334d;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .05);
+}
+
+.panel-default {
+     border-color: transparent;
+}
+
+.panel-default > .panel-heading {
+    background-color: #33334d;
+    border-color: #5c5c8a;
+    color: white;
+}
+
+.squipped {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.alert {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.form-control {
+    color: #f0f0f5;
+    background-color: #33334d;
+    border: 1px solid #666699;
+}
+
+hr {
+    border-top: 1px solid #666699;
 }
