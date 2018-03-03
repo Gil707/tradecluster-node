@@ -1,0 +1,101 @@
+div
+    br
+    h4(style='color: gray') Trade amount settings:
+div.form-group-sm
+    label Coin position:
+    select.form-control(name='')
+        option(value="btc") BTC
+        option(value="eth") ETH
+        option(value="eth") USD
+div.form-group-sm
+    label Trade amount:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    label Template:
+    select.form-control(name='')
+        option(value="limit") Limit
+div.form-group-sm
+    label Fee:
+    input.form-control(type='number', name='')
+div
+    br
+    h4(style='color: gray') Mad hatter mode:
+div.form-group-sm
+    div.checkbox
+        label
+            input(type='checkbox', name='')
+            span: b Min Price Change To Buy
+
+div
+    br
+    h4(style='color: gray') Safety settings:
+div.form-group-sm
+    label Min Price Change To Buy:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    label Min Price Change To Sell:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    label Stop Loss (%):
+    input.form-control(type='number', name='')
+
+div
+    br
+    h4(style='color: gray') Bollinger Bands Settings:
+div.form-group-sm
+    label Length:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    label Dev.up:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    label Dev.down:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    label MA Type:
+    select.form-control(name='')
+        option(value="sma") Sma
+div.form-group-sm
+    label Deviation:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    div.checkbox
+        label
+            input(type='checkbox', name='')
+            span: b Require FCC
+div.form-group-sm
+    div.checkbox
+        label
+            input(type='checkbox', name='')
+            span: b Reset middle
+div.form-group-sm
+    div.checkbox
+        label
+            input(type='checkbox', name='')
+            span: b Allow mid sells
+
+div
+    br
+    h4(style='color: gray') RSI settings:
+div.form-group-sm
+    label Length:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    label Buy Level:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    label Sell Level:
+    input.form-control(type='number', name='')
+
+div
+    br
+    h4(style='color: gray') MACD settings:
+div.form-group-sm
+    label MACD Fast:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    label MACD Slow:
+    input.form-control(type='number', name='')
+div.form-group-sm
+    label MACD Signal:
+    input.form-control(type='number', name='')

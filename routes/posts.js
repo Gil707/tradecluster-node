@@ -17,8 +17,6 @@ router.get('/all/page/:id', function (req, res) {
     Post.paginate({}, {page: req.params.id, sort: '-created_at'}).then(function (result, err) {
         if (!err) {
 
-            console.log(result.pages);
-
             let pagesarr = [];
             for(let i = 1; i <= result.pages; i++) {
                 pagesarr.push(i)

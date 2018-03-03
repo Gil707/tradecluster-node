@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('#botcfg-addblock').load('/botconfigs/admin/forms/' + $('#botselector').val());
+
     $('#delete-post').on('click', function (e) {
         $target = $(e.target);
         const id = $target.attr('data-id');
@@ -15,6 +17,10 @@ $(document).ready(function () {
             }
         });
     });
+});
+
+$('#botselector').change(function () {
+        $('#botcfg-addblock').load('/botconfigs/admin/forms/' + $(this).val());
 });
 
 $("#freeblock").click(function(){

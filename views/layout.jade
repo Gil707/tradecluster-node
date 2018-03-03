@@ -57,10 +57,14 @@ html
           ul.nav.navbar-nav.navbar-right
             if user
               li.hiuser
-                span.label.label-primary Hi #{user.name}
-                span.label.label-info #{user.balance} $
+                //span.hint(style='color: #EFEFEF; font-size: 10px') Balance: #{user.balance}$ &nbsp;&nbsp;&nbsp;|
+                if (user.status === 2)
+                  span.glyphicon.glyphicon-user(style='color: gold; font-size: 10px; margin-left: 10px;')
+                else
+                  span.glyphicon.glyphicon-user(style='color: #7575a3; font-size: 10px; margin-left: 10px')
+
               li
-                a(href='/profile') Profile
+                a(href='/profile') #{user.name}
               li
                 a(href='/users/logout') Logout
             else

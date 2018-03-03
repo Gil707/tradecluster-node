@@ -38,6 +38,9 @@ let UserSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    paid_till: {
+        type: Date
+    },
     created_at: {
         type: Date,
         default: Date.now

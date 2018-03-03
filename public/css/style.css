@@ -23,36 +23,37 @@ body {
 
 .mybar {
     /*background-color: #286090;*/
-    background-color:rgba(40, 96, 144, 1);
+    background-color: rgba(40, 96, 144, 1);
     /*transition: .5s;*/
     border-radius: 0;
 }
 
 /*.mybar:hover {*/
-    /*background-color:rgba(40, 96, 144, 1);*/
-    /*transition: .5s;*/
-    /*border-radius: 0;*/
+/*background-color:rgba(40, 96, 144, 1);*/
+/*transition: .5s;*/
+/*border-radius: 0;*/
 /*}*/
 
 .navbar-brand {
     color: white;
 }
+
 .navbar-brand:hover {
     color: #66afe9;
 }
 
 .hiuser {
-    top: 13px;
+    top: 14px;
     right: 10px;
 }
 
-.alert-error{
+.alert-error {
     color: #a94442;
     background-color: #f2dede;
     border-color: #ebccd1;
 }
 
-.alert-success_msg{
+.alert-success_msg {
     color: #3c763d;
     background-color: #dff0d8;
     border-color: #d6e9c6;
@@ -68,6 +69,7 @@ body {
     color: #31b0d5;
     font-size: 13px;
 }
+
 .cur_course {
     color: lightgray;
     font-size: 13px;
@@ -116,6 +118,7 @@ h1, .h1, h2, .h2, h3, .h3 {
     color: #0f74a8;
     font-size: 12px;
 }
+
 .crs_itm_val {
     font-size: 12px;
     color: #1b6d85;
@@ -128,10 +131,10 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 /*.usr-money-header {*/
-    /*font-size: 10px;*/
-    /*color: #e8f2ff;*/
-    /*font-weight: bold;*/
-    /*margin-left: 5px;*/
+/*font-size: 10px;*/
+/*color: #e8f2ff;*/
+/*font-weight: bold;*/
+/*margin-left: 5px;*/
 /*}*/
 
 .subbots-link {
@@ -162,7 +165,8 @@ h1, .h1, h2, .h2, h3, .h3 {
     animation: rotating 2s linear infinite;
 }
 
-@-webkit-keyframes rotating /* Safari and Chrome */ {
+@-webkit-keyframes rotating /* Safari and Chrome */
+{
     from {
         -webkit-transform: rotate(0deg);
         -o-transform: rotate(0deg);
@@ -174,6 +178,7 @@ h1, .h1, h2, .h2, h3, .h3 {
         transform: rotate(360deg);
     }
 }
+
 @keyframes rotating {
     from {
         -ms-transform: rotate(0deg);
@@ -190,11 +195,13 @@ h1, .h1, h2, .h2, h3, .h3 {
         transform: rotate(360deg);
     }
 }
+
 .botcfg-block {
     font-family: "Courier New", sans-serif;
     font-size: 12px;
 
 }
+
 .botlink-h4 {
     font-size: 18px;
     font-weight: bold;
@@ -209,17 +216,19 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 .freeblock {
-    color:forestgreen;
+    color: forestgreen;
     cursor: pointer;
 }
+
 .freeblock:hover {
     text-decoration: underline;
 }
 
 .chargeableblock {
-    color:red;
+    color: red;
     cursor: pointer;
 }
+
 .chargeableblock:hover {
     text-decoration: underline;
 }
@@ -238,4 +247,8 @@ h1, .h1, h2, .h2, h3, .h3 {
 
 .backtobotcfs:hover {
     text-decoration: none;
+}
+
+.margin-bottom {
+    margin-bottom: 5px;
 }

@@ -85,6 +85,11 @@ router.get('/admin', auth.ensureAuthenticated, function (req, res) {
         });
 });
 
+router.get('/admin/forms/:bot', auth.ensureAuthenticated, function (req, res) {
+    bot = req.params.bot;
+    res.render('botconfig/forms/' + bot, {});
+});
+
 router.post('/add', auth.ensureAuthenticated, function (req, res) {
 
     req.checkBody('bot', 'Bot is required').notEmpty();
