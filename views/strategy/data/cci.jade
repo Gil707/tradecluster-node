@@ -1,0 +1,43 @@
+extends ../../layout
+
+block content
+    a(href='javascript:history.back()').glyphicon.glyphicon-arrow-left.backtobotcfs
+    h2 CCI (Commodity Channel Index)
+    div.row
+        div.col-lg-8
+            p The CCI, or Commodity Channel Index, was developed by Donald Lambert, a technical analyst who originally published the indicator in Commodities magazine (now Futures) in 1980. Despite its name, the CCI can be used in any market and is not just for commodities. The CCI was originally developed to spot long-term trend changes but has been adapted by traders for use on all time frames. Here are two strategies that both investors and traders can employ.
+            h4 CCI Indicator
+
+            p The CCI compares the current price to an average price over a period of time. The indicator fluctuates above or below zero, moving into positive or negative territory. While most values, approximately 75%, will fall between -100 and +100, about 25% of the values will fall outside this range, indicating a lot of weakness or strength in the price movement.
+
+            p: b Figure 1. Stock Chart with CCI Indicator
+            img(src='https://i.investopedia.com/u52849/cci-1.png')
+
+            p The chart above uses 30 periods in the CCI calculation; since the chart is a monthly chart, each new calculation is based on the most recent 30 months. CCIs of 20 and 40 periods are also common.
+
+            p A period refers to the number of price bars the indicator will include in its calculation. The price bars can be one-minute, five-minute, daily, weekly, monthly or any time frame you have accessible on your charts.
+
+            p The longer the period chosen (the more bars in the calculation), the less often the indicator will move outside -100 or +100. Short-term traders prefer a shorter period (fewer price bars in the calculation) since it will provide more signals, while longer-term trades and investors prefer a longer period such as 30 or 40. Using a daily or weekly chart is recommended for longer-term traders, while short-term trades can apply the indicator to an hourly chart or even a one-minute chart.
+
+            p Indicator calculations are performed automatically by charting software or a trading platform; you're only required to input the number of periods you wish to use and choose a time frame for your chart (such as 4-hour, daily, weekly, etc). Stockcharts.com, Freestockcharts.com and trading platforms such as Thinkorswim and MetaTrader all provide the CCI indicator. Select the indicator from the indicators list to add it to your chart.
+
+            p When the CCI is above +100, the price is well above the average price as measured by the indicator. When the indicator is below -100, the price is well below the average price.
+
+            h4 CCI Basic Strategy
+
+            p A basic CCI strategy is to watch for the CCI to move above +100 to generate buy signals and move below -100 to generate sell or short trade signals. Investors may only wish to take the buy signals, exit when the sell signals occurs and then re-invest when the buy signal occurs again.
+
+            p: b Figure 2. ETF Chart with CCI Basic Trade Signals
+            img(src='https://i.investopedia.com/u52849/cci-2.jpg')
+
+            p The weekly chart above generated a sell signal in 2011 when the CCI dipped below -100. This would have told longer-term traders that a potential downtrend was underway. More active traders could have also used this as a short-sale signal. In early 2012 a buy signal was triggered, and the long position stays open until the CCI moves below -100.
+
+            hr
+
+            p
+                span
+                    h4 We have a&nbsp;
+                       a(href='/botconfigs/5a9554153f335b2a4c826205') config
+                       span &nbsp;for&nbsp;
+                       b Gekko
+                       span &nbsp;by this strategy!
