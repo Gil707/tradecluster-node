@@ -2,20 +2,21 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or https://ckeditor.com/legal/terms-of-use/#open-source-licences
 */
+@import url("http://fonts.googleapis.com/css?family=Raleway:300");
 
 body
 {
 	/* Font */
-	font-family: sans-serif, Arial, Verdana, "Trebuchet MS";
+	font-family: 'Raleway', sans-serif, Arial, Verdana, "Trebuchet MS";
 	font-size: 12px;
 
 	/* Text color */
-	color: #333;
+	color: #eee;
 
 	/* Remove the background color to make it transparent */
-	background-color: #fff;
+	background-color: #33334d;
 
-	margin: 20px;
+	margin: 10px;
 }
 
 .cke_editable

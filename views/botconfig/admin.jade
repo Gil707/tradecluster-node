@@ -16,6 +16,9 @@ block content
                     label Name:
                     input.form-control(type='text', name='name')
                 div.form-group-sm
+                    label Preview:
+                    textarea.form-control(name='preview', id='bot-preview', style='height: 80px')
+                div.form-group-sm
                     label Market:
                     select.form-control(name='bot', id='f-cur')
                         option(value="btc/usd") BTC/USD
@@ -25,7 +28,7 @@ block content
                         option(value="bt/yyw") BTC/YYW
                         option(value="btc/eur") BTC/EUR
                         option(value="btc/ltc") BTC/LTC
-
+                div.form-group-sm
                 // load by ajax block start
                 div#botcfg-addblock
                 // load by ajax block end
@@ -57,3 +60,9 @@ block content
                         a.btn-sm.btn-default(href='/botconfigs/edit/' + config._id) Edit
                         i &nbsp;
                         a.btn-sm.btn-danger(href='/botconfigs/delete/' + config._id) Delete
+    script(src='/js/ckeditor/ckeditor.js')
+    script.
+        CKEDITOR.replace('bot-preview', {
+            filebrowserUploadUrl: '/uploader',
+            toolbar: 'Basic'
+        })

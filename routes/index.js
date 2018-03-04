@@ -2,10 +2,14 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../components/auth');
 
+let multipart = require('connect-multiparty');
+let multipartMiddleware = multipart();
+
 
 let Post = require('../models/post');
 let News = require('../models/news');
 
+let fn = require('../components/fn');
 
 
 
@@ -18,6 +22,8 @@ router.get('*', function (req, res, next) {
     res.locals.user = req.user || null;
     next();
 });
+
+router.post('/uploader', multipartMiddleware, auth.ensureAuthenticated, fn);
 
 // Home Route
 router.get('/', function (req, res) {

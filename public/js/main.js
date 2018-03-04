@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
 
     $('#botcfg-addblock').load('/botconfigs/admin/forms/' + $('#botselector').val());
