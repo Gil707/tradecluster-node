@@ -8,6 +8,11 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
     // config.skin = 'moono-dark';
+    // config.autoParagraph = false;
+    // config.fillEmptyBlocks = false;
+    // config.enterMode = CKEDITOR.ENTER_BR;
+    // config.forceEnterMode = true;
+
     config.filebrowserUploadUrl = '/uploader';
     config.extraPlugins = 'autogrow';
     config.toolbar_Basic =

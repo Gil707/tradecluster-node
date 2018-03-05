@@ -1,16 +1,51 @@
 extends ../layout
 
 block content
-    h1 #{title}
-    form(method='POST', action='/offers/edit/'+article._id)
-        div.form-group
-            label Title:
-            input.form-control(name='title', type='text', value=article.title)
-        div.form-group
-            label Author:
-            input.form-control(name='author', type='text', value=article.author)
-        div.form-group
-            label Text:
-            textarea.form-control(name='body')= article.body
-        br
-        input.btn.btn-primary(type='submit', value='Submit')
+    h2 #{title}
+    form(method='POST', action='/botconfigs/edit/'+botcfg._id)
+        div.row
+            div.col-lg-9
+                div.form-group-sm
+                    p
+                        b.text-capitalize #{botcfg.bot}&nbsp;
+                        span configuration for&nbsp;
+                        b.text-uppercase #{botcfg.market}&nbsp;
+                        span market. Added at&nbsp;
+                        i #{botcfg.created_at}
+                div.col-sm-8(style='padding-left:0;padding-right: 6px;')
+                    div.form-group-sm
+                        label Name:
+                        input.form-control(type='text', name='cfg_name', value='#{botcfg.name}')
+                div.col-sm-2(style='padding:0;padding-right: 6px;')
+                    div.form-group-sm
+                        label Ver.:
+                        input.form-control(type='number', name='cfg_ver', value='#{botcfg.version}')
+                div.col-sm-2(style='padding:0')
+                    div.form-group-sm
+                        label Price:
+                        input.form-control(type='number', name='cost', value='#{botcfg.cost}')
+                div.form-group-sm
+                    label Preview:
+                    textarea.form-control(name='preview', id='botcfg-preview-edit') !{botcfg.preview}
+                div.form-group-sm
+                    label Body:
+                    textarea.form-control(name='body', id='botcfg-body-edit') !{botcfg.body}
+                div.form-group-sm
+                    label Archive: (upload new to replace)&nbsp;
+                        span.hint (zip,rar)
+                    input(type='file', name='arclink').upl-file
+                br
+                input.btn.btn-primary(type='submit', value='Save')
+            div.col-lg-3
+
+    script(src='/js/ckeditor/ckeditor.js')
+    script.
+        CKEDITOR.replace('botcfg-preview-edit', {
+            toolbar: 'Basic',
+            height: '200px'
+        })
+    script.
+        CKEDITOR.replace('botcfg-body-edit', {
+            toolbar: 'Full',
+            height: '600px'
+        })

@@ -153,13 +153,33 @@ router.post('/add', auth.ensureAuthenticated, function (req, res) {
 
 });
 
+// Load Edit Form
+router.get('/edit/:id', auth.ensureAuthenticated, function (req, res) {
+
+    BotConfig.findById(req.params.id, function (err, botcfg) {
+        if (err) {
+            return console.log(err)
+        } else if (!(req.user._id.equals(botcfg.author)) || !(req.user.login === 'admin')) {
+            req.flash('danger', 'Not Authorized');
+            res.redirect('/');
+        } else {
+            res.render('botconfig/edit_botconfig', {
+                title: 'Edit "' + botcfg.name + '" configuration.',
+                botcfg: botcfg
+            });
+        }
+    });
+});
+
 // Update Submit POST Route
 router.post('/edit/:id', auth.ensureAuthenticated, function (req, res) {
     let botcfg = {};
-    // botcfg.name = req.body.name;
+    botcfg.name = req.body.cfg_name;
+    botcfg.version = req.body.cfg_ver;
+    botcfg.cost = req.body.cost;
     // botcfg.bot = req.body.bot;
-    botcfg.preview = req.body.preview;
-    botcfg.body = req.body.body;
+    botcfg.preview = req.body.preview.replace(/(\r\n|\n|\r)/gm,"");
+    botcfg.body = req.body.body.replace(/(\r\n|\n|\r)/gm,"");
 
     let query = {_id: req.params.id};
 
@@ -220,43 +240,44 @@ function fillHaasCfg(req) {
 
     botcfg.author = req.user._id;
     botcfg.name = req.body.cfg_name;
+    botcfg.version = req.body.cfg_ver;
     botcfg.bot = req.body.bot;
     botcfg.market = req.body.market;
     botcfg.preview = req.body.preview;
     botcfg.body =
-        '<h3>Trade amount settings</h3> \r\n'
-        + '# Coin position: <b>' + req.body.coin_pos + '</b>\r\n'
-        + '# Trade amount: <b>' + req.body.ta + '</b>\r\n'
-        + '# Template: <b>' + req.body.template + '</b>\r\n'
-        + '# Fee: <b>' + req.body.fee + '</b>\r\n\r\n'
-
-        + '<h3>Mad hatter mode</h3> \r\n'
-        + '# Min Price Change To Buy: <b>' + mh_min_pr_c2b + '</b>\r\n\r\n'
-
-        + '<h3>Safety settings</h3> \r\n'
-        + '# Min Price Change To Buy: <b>' + req.body.ss_min_pr_c2b + '</b>\r\n'
-        + '# Min Price Change To Sell: <b>' + req.body.ss_min_pr_c2s + '</b>\r\n'
-        + '# Stop Loss (%): <b>' + req.body.stoploss + '</b>\r\n\r\n'
-
-        + '<h3>Bollinger Bands Settings</h3> \r\n'
-        + '# Length: <b>' + req.body.bbs_length + '</b>\r\n'
-        + '# Dev.up: <b>' + req.body.bbs_devup + '</b>\r\n'
-        + '# Dev.down: <b>' + req.body.bbs_devdown + '</b>\r\n'
-        + '# MA Type: <b>' + req.body.bbs_matype + '</b>\r\n'
-        + '# Deviation: <b>' + req.body.bbs_deviation + '</b>\r\n'
-        + '# Require FCC: <b>' + bbs_r_fcc + '</b>\r\n'
-        + '# Reset middle <b>' + bbs_res_middle + '</b>\r\n'
-        + '# Allow mid sells <b>' + bbs_al_mid_sells + '</b>\r\n\r\n'
-
-        + '<h3>RSI settings</h3> \r\n'
-        + '# Length: <b>' + req.body.rsi_length + '</b>\r\n'
-        + '# Buy Level: <b>' + req.body.rsi_b_lev + '</b>\r\n'
-        + '# Sell Level: <b>' + req.body.rsi_s_lev + '</b>\r\n\r\n'
-
-        + '<h3>MACD settings</h3> \r\n'
-        + '# MACD Fast: <b>' + req.body.macd_fast + '</b>\r\n'
-        + '# MACD Slow: <b>' + req.body.macd_slow + '</b>\r\n'
-        + '# MACD Signal: <b>' + req.body.macd_signal + '</b>';
+        '<h4>Trade amount settings</h4>'
+        + '<p># Coin position: <strong>' + req.body.coin_pos + '</strong></p>'
+        + '<p># Trade amount: <strong>' + req.body.ta + '</strong></p>'
+        + '<p># Template: <strong>' + req.body.template + '</strong></p>'
+        + '<p># Fee: <strong>' + req.body.fee + '</strong></p>'
+        + '<br>'
+        + '<h4>Mad hatter mode</h4>'
+        + '<p># Min Price Change To Buy: <strong>' + mh_min_pr_c2b + '</strong></p>'
+        + '<br>'
+        + '<h4>Safety settings</h4>'
+        + '<p># Min Price Change To Buy: <strong>' + req.body.ss_min_pr_c2b + '</strong></p>'
+        + '<p># Min Price Change To Sell: <strong>' + req.body.ss_min_pr_c2s + '</strong></p>'
+        + '<p># Stop Loss (%): <strong>' + req.body.stoploss + '</strong></p>'
+        + '<br>'
+        + '<h4>Bollinger Bands Settings</h4>'
+        + '<p># Length: <strong>' + req.body.bbs_length + '</strong></p>'
+        + '<p># Dev.up: <strong>' + req.body.bbs_devup + '</strong></p>'
+        + '<p># Dev.down: <strong>' + req.body.bbs_devdown + '</strong></p>'
+        + '<p># MA Type: <strong>' + req.body.bbs_matype + '</strong></p>'
+        + '<p># Deviation: <strong>' + req.body.bbs_deviation + '</strong></p>'
+        + '<p># Require FCC: <strong>' + bbs_r_fcc + '</strong></p>'
+        + '<p># Reset middle <strong>' + bbs_res_middle + '</strong></p>'
+        + '<p># Allow mid sells <strong>' + bbs_al_mid_sells + '</strong></p>'
+        + '<br>'
+        + '<h4>RSI settings</h4>'
+        + '<p># Length: <strong>' + req.body.rsi_length + '</strong></p>'
+        + '<p># Buy Level: <strong>' + req.body.rsi_b_lev + '</strong></p>'
+        + '<p># Sell Level: <strong>' + req.body.rsi_s_lev + '</strong></p>'
+        + '<h4>MACD settings</h4>'
+        + '<br>'
+        + '<p># MACD Fast: <strong>' + req.body.macd_fast + '</strong></p>'
+        + '<p># MACD Slow: <strong>' + req.body.macd_slow + '</strong></p>'
+        + '<p># MACD Signal: <strong>' + req.body.macd_signal + '</strong>';
 
     botcfg.cost = req.body.cost;
 

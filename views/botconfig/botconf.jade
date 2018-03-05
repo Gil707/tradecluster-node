@@ -11,9 +11,9 @@ block content
                     b= botcfg.bot
                 div.hint= botcfg.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')
                 h4 Preview
-                div.botconf-text!= botcfg.preview
+                div.botconf-text.no-p-margin!= botcfg.preview
                 h4 Config
-                div.botconf-text!= botcfg.body
+                div.botconf-text.no-p-margin!= botcfg.body
 
                 if (botcfg.arclink)
                     div

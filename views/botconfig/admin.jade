@@ -12,9 +12,14 @@ block content
                     select.form-control(name='bot', id='botselector', style='font-weight: bold')
                         option(value="haas") Haas
                         option(value="gekko") Gekko
-                div.form-group-sm
-                    label Name:
-                    input.form-control(type='text', name='cfg_name')
+                div.col-sm-10(style='padding-left:0;padding-right: 6px;')
+                    div.form-group-sm
+                        label Name:
+                        input.form-control(type='text', name='cfg_name')
+                div.col-sm-2(style='padding:0')
+                    div.form-group-sm
+                        label Ver.:
+                        input.form-control(type='number', name='cfg_ver', value='1')
                 div.form-group-sm
                     label Preview:
                     textarea.form-control(name='preview', id='bot-preview', style='height: 80px')
@@ -36,7 +41,7 @@ block content
                 div.form-group-sm
                     label Archive:&nbsp;
                         span.hint (zip,rar)
-                    input(type='file', name='arclink')
+                    input(type='file', name='arclink').upl-file
                 div.form-group-sm
                     label Cost: &nbsp;
                         span.hint (Leave empty for free)
@@ -50,9 +55,10 @@ block content
                 each config, i in configs
                     li.list-group-item.botcfg-block
                         a(href="/botconfigs/" + config._id).text-capitalize.botlink-h4 #{config.name}
+                        span.hint v.#{config.version}
                         span.hint.text-capitalize [#{config.bot}]
                             i.pull-right.post-date #{config.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
-                        div !{config.preview}
+                        div.no-p-margin !{config.preview}
                         if (config.cost > 0)
                             span.label.label-info Price: #{config.cost} $
                             br

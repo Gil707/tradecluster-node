@@ -15,6 +15,10 @@ let botconfigSchema = mongoose.Schema({
             required: true,
             lowercase: true
         },
+        version: {
+            type: String,
+            default: 1
+        },
         market: {
             type: String,
             required: true
