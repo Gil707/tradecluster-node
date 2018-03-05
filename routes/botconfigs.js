@@ -93,9 +93,9 @@ router.get('/admin/forms/:bot', auth.ensureAuthenticated, function (req, res) {
 router.post('/add', auth.ensureAuthenticated, function (req, res) {
 
     req.checkBody('bot', 'Bot is required').notEmpty();
-    req.checkBody('name', 'Name of config is required').notEmpty();
+    req.checkBody('cfg_name', 'Name of config is required').notEmpty();
+    req.checkBody('market', 'Market is required').notEmpty();
     req.checkBody('preview', 'Preview is required').notEmpty();
-    req.checkBody('body', 'Body is required').notEmpty();
 
     // Get Errors
     let errors = req.validationErrors();
@@ -106,14 +106,13 @@ router.post('/add', auth.ensureAuthenticated, function (req, res) {
         });
     } else {
 
-        let botcfg = new BotConfig();
+        let botcfg;
 
-        botcfg.author = req.user._id;
-        botcfg.name = req.body.name;
-        botcfg.bot = req.body.bot;
-        botcfg.preview = req.body.preview;
-        botcfg.body = req.body.body;
-        botcfg.cost = req.body.cost;
+        switch (req.body.bot) {
+            case 'haas': botcfg = fillHaasCfg(req);
+            break;
+            case 'gekko': botcfg = fillGekkoCfg(req);
+        }
 
         let file = req.files.arclink;
 
@@ -209,6 +208,75 @@ router.get('/:id', auth.ensureAuthenticated, function (req, res) {
         else res.status(500).send();
     });
 });
+
+function fillHaasCfg(req) {
+
+    let botcfg = new BotConfig();
+
+    let mh_min_pr_c2b = req.body.mh_min_pr_c2b ? 'on' : 'off';
+    let bbs_r_fcc = req.body.bbs_r_fcc ? 'on' : 'off';
+    let bbs_res_middle = req.body.bbs_res_middle ? 'on' : 'off';
+    let bbs_al_mid_sells = req.body.bbs_al_mid_sells ? 'on' : 'off';
+
+    botcfg.author = req.user._id;
+    botcfg.name = req.body.cfg_name;
+    botcfg.bot = req.body.bot;
+    botcfg.market = req.body.market;
+    botcfg.preview = req.body.preview;
+    botcfg.body =
+        '<h3>Trade amount settings</h3> \r\n'
+        + '# Coin position: <b>' + req.body.coin_pos + '</b>\r\n'
+        + '# Trade amount: <b>' + req.body.ta + '</b>\r\n'
+        + '# Template: <b>' + req.body.template + '</b>\r\n'
+        + '# Fee: <b>' + req.body.fee + '</b>\r\n\r\n'
+
+        + '<h3>Mad hatter mode</h3> \r\n'
+        + '# Min Price Change To Buy: <b>' + mh_min_pr_c2b + '</b>\r\n\r\n'
+
+        + '<h3>Safety settings</h3> \r\n'
+        + '# Min Price Change To Buy: <b>' + req.body.ss_min_pr_c2b + '</b>\r\n'
+        + '# Min Price Change To Sell: <b>' + req.body.ss_min_pr_c2s + '</b>\r\n'
+        + '# Stop Loss (%): <b>' + req.body.stoploss + '</b>\r\n\r\n'
+
+        + '<h3>Bollinger Bands Settings</h3> \r\n'
+        + '# Length: <b>' + req.body.bbs_length + '</b>\r\n'
+        + '# Dev.up: <b>' + req.body.bbs_devup + '</b>\r\n'
+        + '# Dev.down: <b>' + req.body.bbs_devdown + '</b>\r\n'
+        + '# MA Type: <b>' + req.body.bbs_matype + '</b>\r\n'
+        + '# Deviation: <b>' + req.body.bbs_deviation + '</b>\r\n'
+        + '# Require FCC: <b>' + bbs_r_fcc + '</b>\r\n'
+        + '# Reset middle <b>' + bbs_res_middle + '</b>\r\n'
+        + '# Allow mid sells <b>' + bbs_al_mid_sells + '</b>\r\n\r\n'
+
+        + '<h3>RSI settings</h3> \r\n'
+        + '# Length: <b>' + req.body.rsi_length + '</b>\r\n'
+        + '# Buy Level: <b>' + req.body.rsi_b_lev + '</b>\r\n'
+        + '# Sell Level: <b>' + req.body.rsi_s_lev + '</b>\r\n\r\n'
+
+        + '<h3>MACD settings</h3> \r\n'
+        + '# MACD Fast: <b>' + req.body.macd_fast + '</b>\r\n'
+        + '# MACD Slow: <b>' + req.body.macd_slow + '</b>\r\n'
+        + '# MACD Signal: <b>' + req.body.macd_signal + '</b>';
+
+    botcfg.cost = req.body.cost;
+
+    return botcfg;
+}
+
+function fillGekkoCfg(req) {
+
+    let botcfg = new BotConfig();
+
+    botcfg.author = req.user._id;
+    botcfg.name = req.body.cfg_name;
+    botcfg.bot = req.body.bot;
+    botcfg.market = req.body.market;
+    botcfg.preview = req.body.preview;
+    botcfg.body = req.body.body;
+    botcfg.cost = req.body.cost;
+
+    return botcfg;
+}
 
 
 module.exports = router;

@@ -26,7 +26,7 @@ block content
                         li.list-group.list-unstyled
                             a(href='/botconfigs/'+haascfg._id): h5.list-group-item-heading.text-capitalize: b #{haascfg.name}
                                 i.pull-right.post-date #{haascfg.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
-                            p.list-group-item!= haascfg.preview
+                            div.list-group-item(style='padding-bottom: 2px;')!= haascfg.preview
                             a(href='/botconfigs/'+haascfg._id).btn-sm.btn-info View...
             else
                 br
@@ -42,7 +42,7 @@ block content
                         li.list-group.list-unstyled
                             h5.list-group-item-heading.text-capitalize: b #{haascfg_p.name}
                                 i.pull-right.post-date #{haascfg_p.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
-                            p.list-group-item!= haascfg_p.preview
+                            div.list-group-item(style='padding-bottom: 2px;')!= haascfg_p.preview
                             a(href='#').btn-sm.btn-success Buy for
                                 b &nbsp;#{haascfg_p.cost} $
             else

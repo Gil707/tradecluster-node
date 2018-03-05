@@ -3,27 +3,27 @@ div
     h4(style='color: gray') Trade amount settings:
 div.form-group-sm
     label Coin position:
-    select.form-control(name='')
+    select.form-control(name='coin_pos')
         option(value="btc") BTC
         option(value="eth") ETH
         option(value="eth") USD
 div.form-group-sm
     label Trade amount:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='ta')
 div.form-group-sm
     label Template:
-    select.form-control(name='')
+    select.form-control(name='template')
         option(value="limit") Limit
 div.form-group-sm
     label Fee:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='fee')
 div
     br
     h4(style='color: gray') Mad hatter mode:
 div.form-group-sm
     div.checkbox
         label
-            input(type='checkbox', name='')
+            input(type='checkbox', name='mh_min_pr_c2b')
             span: b Min Price Change To Buy
 
 div
@@ -31,47 +31,47 @@ div
     h4(style='color: gray') Safety settings:
 div.form-group-sm
     label Min Price Change To Buy:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='ss_min_pr_c2b')
 div.form-group-sm
     label Min Price Change To Sell:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='ss_min_pr_c2s')
 div.form-group-sm
     label Stop Loss (%):
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='stoploss')
 
 div
     br
     h4(style='color: gray') Bollinger Bands Settings:
 div.form-group-sm
     label Length:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='bbs_length')
 div.form-group-sm
     label Dev.up:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='bbs_devup')
 div.form-group-sm
     label Dev.down:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='bbs_devdown')
 div.form-group-sm
     label MA Type:
-    select.form-control(name='')
+    select.form-control(name='bbs_matype')
         option(value="sma") Sma
 div.form-group-sm
     label Deviation:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='bbs_deviation')
 div.form-group-sm
     div.checkbox
         label
-            input(type='checkbox', name='')
+            input(type='checkbox', name='bbs_r_fcc')
             span: b Require FCC
 div.form-group-sm
     div.checkbox
         label
-            input(type='checkbox', name='')
+            input(type='checkbox', name='bbs_res_middle')
             span: b Reset middle
 div.form-group-sm
     div.checkbox
         label
-            input(type='checkbox', name='')
+            input(type='checkbox', name='bbs_al_mid_sells')
             span: b Allow mid sells
 
 div
@@ -79,23 +79,23 @@ div
     h4(style='color: gray') RSI settings:
 div.form-group-sm
     label Length:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='rsi_length')
 div.form-group-sm
     label Buy Level:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='rsi_b_lev')
 div.form-group-sm
     label Sell Level:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='rsi_s_lev')
 
 div
     br
     h4(style='color: gray') MACD settings:
 div.form-group-sm
     label MACD Fast:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='macd_fast')
 div.form-group-sm
     label MACD Slow:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='macd_slow')
 div.form-group-sm
     label MACD Signal:
-    input.form-control(type='number', name='')
+    input.form-control(type='number', name='macd_signal')

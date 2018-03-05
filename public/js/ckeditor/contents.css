@@ -2,12 +2,12 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or https://ckeditor.com/legal/terms-of-use/#open-source-licences
 */
-@import url("http://fonts.googleapis.com/css?family=Raleway:300");
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:300");
 
 body
 {
 	/* Font */
-	font-family: 'Raleway', sans-serif, Arial, Verdana, "Trebuchet MS";
+	font-family: 'Open Sans', sans-serif, Arial, Verdana, "Trebuchet MS";
 	font-size: 12px;
 
 	/* Text color */

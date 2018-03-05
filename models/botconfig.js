@@ -15,6 +15,10 @@ let botconfigSchema = mongoose.Schema({
             required: true,
             lowercase: true
         },
+        market: {
+            type: String,
+            required: true
+        },
         preview: {
             type: String,
             required: true
@@ -39,5 +43,7 @@ let botconfigSchema = mongoose.Schema({
     {
         timestamps: true
     });
+
+
 
 let BotConfig = module.exports = mongoose.model('BotConfig', botconfigSchema);

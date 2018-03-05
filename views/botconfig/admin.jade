@@ -14,14 +14,14 @@ block content
                         option(value="gekko") Gekko
                 div.form-group-sm
                     label Name:
-                    input.form-control(type='text', name='name')
+                    input.form-control(type='text', name='cfg_name')
                 div.form-group-sm
                     label Preview:
                     textarea.form-control(name='preview', id='bot-preview', style='height: 80px')
                 div.form-group-sm
                     label Market:
-                    select.form-control(name='bot', id='f-cur')
-                        option(value="btc/usd") BTC/USD
+                    select.form-control(name='market', id='f-cur')
+                        option(value="btc/usd", selected=) BTC/USD
                         option(value="btc/eth") BTC/ETH
                         option(value="btc/xrp") BTC/XRP
                         option(value="btc/eos") BTC/EOS
@@ -52,7 +52,7 @@ block content
                         a(href="/botconfigs/" + config._id).text-capitalize.botlink-h4 #{config.name}
                         span.hint.text-capitalize [#{config.bot}]
                             i.pull-right.post-date #{config.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
-                        div #{config.preview}
+                        div !{config.preview}
                         if (config.cost > 0)
                             span.label.label-info Price: #{config.cost} $
                             br

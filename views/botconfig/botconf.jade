@@ -7,13 +7,13 @@ block content
                 h2.text-capitalize
                     a(href='javascript:history.back()').glyphicon.glyphicon-arrow-left.backtobotcfs
                     span &nbsp; #{botcfg.name}
-                h4.text-capitalize For&nbsp;
+                h3.text-capitalize For&nbsp;
                     b= botcfg.bot
                 div.hint= botcfg.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')
-                h5 Preview
-                p.botconf-text= botcfg.preview
-                h5 Body
-                p.botconf-text= botcfg.body
+                h4 Preview
+                div.botconf-text!= botcfg.preview
+                h4 Config
+                div.botconf-text!= botcfg.body
 
                 if (botcfg.arclink)
                     div
