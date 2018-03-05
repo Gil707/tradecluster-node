@@ -273,8 +273,8 @@ function fillHaasCfg(req) {
         + '<p># Length: <strong>' + req.body.rsi_length + '</strong></p>'
         + '<p># Buy Level: <strong>' + req.body.rsi_b_lev + '</strong></p>'
         + '<p># Sell Level: <strong>' + req.body.rsi_s_lev + '</strong></p>'
-        + '<h4>MACD settings</h4>'
         + '<br>'
+        + '<h4>MACD settings</h4>'
         + '<p># MACD Fast: <strong>' + req.body.macd_fast + '</strong></p>'
         + '<p># MACD Slow: <strong>' + req.body.macd_slow + '</strong></p>'
         + '<p># MACD Signal: <strong>' + req.body.macd_signal + '</strong>';
