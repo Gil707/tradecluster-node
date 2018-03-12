@@ -6,25 +6,22 @@ block content
             div.col-lg-8
                 h2.text-capitalize
                     a(href='javascript:history.back()').glyphicon.glyphicon-arrow-left.backtobotcfs
-                    span &nbsp; #{botcfg.name}
-                h3.text-capitalize For&nbsp;
+                    span &nbsp; #{botcfg.name}&nbsp;
+                    span(style='font-size: 13px; color: #c2c2d6') ver. : #{botcfg.version}
+                h4.text-capitalize For&nbsp;
                     b= botcfg.bot
-                div.hint= botcfg.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')
-                h4 Preview
-                div.botconf-text.no-p-margin!= botcfg.preview
-                h4 Config
-                div.botconf-text.no-p-margin!= botcfg.body
-
-                if (botcfg.arclink)
-                    div
-                        a(href='/getcfg/' + botcfg.arclink) Download file
+                div.hint Order placed at: #{botorder.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
                 br
-                h5.label.label-info Added by&nbsp;
-                    b #{username}
-                if (user && user.status > 2)
-                    if user._id === botcfg.author
-                        a.btn.btn-default(href='/botconfigs/edit/'+botcfg._id) Edit
-                        a.btn.btn-danger.delete-post(href='#', data-id=botcfg._id) Delete
-            div.col-lg-offset-4
+                div.panel.panel-default
+                    div.panel-body
+                        h4 Please send #{botcfg.cost} BTC to&nbsp;
+                            b(style='color: #5cd65c; margin: 0 8px;')= botorder.addr
+                            span &nbsp;and then click&nbsp;&nbsp;
+                            input(type='button', value='Confirm', style='margin-bottom: 5px; font-size: 18px; font-weight: bold').btn.btn-success
+                        div
+                            p Confirmation of payment will send to your email with activating link.
+                            p After activation you'll get access for config in your cabinet.
+                br
+                p Thank you for purchasing. Contact us for any support.
     else
         a.btn-sm.btn-default(href='/users/login') Please login to view details.
