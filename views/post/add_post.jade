@@ -25,7 +25,7 @@ block content
                     each post, i in posts
                         li.list-group-item
                             h5: a(href="/posts/"+post._id) #{post.caption}
-                                i.pull-right.post-date #{post.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                                i.pull-right.post-date #{post.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
                             a.btn.btn-default(href='/posts/edit/' + post._id) Edit
                             i &nbsp;
                             a.btn.btn-danger(href='/posts/delete/' + post._id) Delete

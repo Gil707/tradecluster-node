@@ -57,7 +57,7 @@ block content
                         a(href="/botconfigs/" + config._id).text-capitalize.botlink-h4 #{config.name}
                         span.hint v.#{config.version}
                         span.hint.text-capitalize [#{config.bot}]
-                            i.pull-right.post-date #{config.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                            i.pull-right.post-date #{config.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
                         div.no-p-margin !{config.preview}
                         if (config.cost > 0)
                             span.label.label-info Price: #{config.cost} $

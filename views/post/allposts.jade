@@ -26,7 +26,7 @@ block content
             ul.list-group
             each post, i in allposts
                 li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
-                    i.pull-right.post-date #{post.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                    i.pull-right.post-date #{post.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
                     h3: b #{post.caption}
                     p!= post.preview
                     if (user)

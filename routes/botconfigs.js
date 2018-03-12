@@ -7,8 +7,9 @@ const mkdirp = require('mkdirp');
 let Cryptr = require('cryptr'),
     cryptr = new Cryptr('qwerty123');
 
-// Post Model
+// Bot Models
 let BotConfig = require('../models/botconfig');
+let BotOrder = require('../models/botorder');
 // User Model
 let User = require('../models/user');
 
@@ -109,9 +110,12 @@ router.post('/add', auth.ensureAuthenticated, function (req, res) {
         let botcfg;
 
         switch (req.body.bot) {
-            case 'haas': botcfg = fillHaasCfg(req);
-            break;
-            case 'gekko': botcfg = fillGekkoCfg(req);
+            case 'haas':
+                botcfg = fillHaasCfg(req);
+                break;
+            case 'gekko':
+                botcfg = fillGekkoCfg(req);
+                break;
         }
 
         let file = req.files.arclink;
@@ -178,8 +182,8 @@ router.post('/edit/:id', auth.ensureAuthenticated, function (req, res) {
     botcfg.version = req.body.cfg_ver;
     botcfg.cost = req.body.cost;
     // botcfg.bot = req.body.bot;
-    botcfg.preview = req.body.preview.replace(/(\r\n|\n|\r)/gm,"");
-    botcfg.body = req.body.body.replace(/(\r\n|\n|\r)/gm,"");
+    botcfg.preview = req.body.preview.replace(/(\r\n|\n|\r)/gm, "");
+    botcfg.body = req.body.body.replace(/(\r\n|\n|\r)/gm, "");
 
     let query = {_id: req.params.id};
 
@@ -228,6 +232,39 @@ router.get('/:id', auth.ensureAuthenticated, function (req, res) {
         else res.status(500).send();
     });
 });
+
+// Post BotOrder
+router.get('/buy/:id', auth.ensureAuthenticated, function (req, res) {
+    BotConfig.findById(req.params.id, function (err, botcfg) {
+        if (botcfg) {
+            if (!err) {
+
+                let botorder = new BotOrder();
+
+                botorder.user_id = req.user._id;
+                botorder.cfg_id = botcfg._id;
+                botorder.addr = '1GMnp2zKcBr2SctLA1magPr9rSXHriLSz5';
+
+                botorder.save(function (err) {
+                    if (err) {
+                        req.flash('error', 'You already bought this');
+                        res.redirect('/botconfigs/' + botcfg.bot);
+                        // res.status(500).send();
+                    } else {
+                        req.flash('success', 'Order placed');
+                        res.render('botconfig/buybtcfg', {
+                            botcfg: botcfg,
+                            botorder: botorder
+                        });
+                    }
+                });
+            }
+            else res.end(err);
+        }
+        else res.status(500).send();
+    });
+});
+
 
 function fillHaasCfg(req) {
 

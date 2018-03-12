@@ -26,7 +26,7 @@ block content
             each news, i in allnews
                 li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
                     h4: b #{news.title}
-                    i.post-date Parsed at #{news.created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                    i.post-date Parsed at #{news.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
                     p!= news.preview
                     if (news.img)
                         img(src=news.img, height='300', style='margin-bottom: 8px;')
