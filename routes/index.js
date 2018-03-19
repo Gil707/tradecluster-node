@@ -7,7 +7,7 @@ let multipartMiddleware = multipart();
 
 
 let Post = require('../models/post');
-let News = require('../models/news');
+let CryptoNews = require('../models/cryptonews');
 
 let fn = require('../components/fn');
 

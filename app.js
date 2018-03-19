@@ -93,7 +93,8 @@ const APP_PORT = 3000;
     let strategies = require('./routes/strategies');
     let botconfigs = require('./routes/botconfigs');
     let analyzes = require('./routes/analyzes');
-    let news = require('./routes/news');
+    let cryptonews = require('./routes/cryptonews');
+    let tradenews = require('./routes/tradenews');
 
     app.use('/', index);
     app.use('/posts', posts);
@@ -101,7 +102,8 @@ const APP_PORT = 3000;
     app.use('/strategies', strategies);
     app.use('/botconfigs', botconfigs);
     app.use('/analyzes', analyzes);
-    app.use('/news', news);
+    app.use('/cryptonews', cryptonews);
+    app.use('/tradenews', tradenews);
 
     app.listen(APP_PORT, function () {
         console.log('Server started on port ' + APP_PORT + '...');

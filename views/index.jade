@@ -8,7 +8,7 @@ block content
         div.col-lg-6
             div.panel.panel-default
                 div.panel-heading
-                    span: b Posts
+                    span: b.panel-capt Posts
                 div.panel-body
                     ul.list-group
                         each post, i in posts
@@ -22,22 +22,16 @@ block content
                                     span.label.label-danger: a(href='/users/login').tologin Please Login to view more...
                     div
                         a(href='/posts/all'): b More posts...
-        div.col-lg-4
+        div.col-lg-3
             div.panel.panel-default
                 div.panel-heading
-                    span: b News
-                div.panel-body#news-div
+                    span: b.panel-capt CryptoNews
+                div.panel-body#cryptonews-div
 
-                    // news list
+                    // cryptonews list
 
-        div.col-lg-2
+        div.col-lg-3
             div.panel.panel-default
                 div.panel-heading
-                    span: b Courses
-                div.panel-body
-                    img(src='/img/logo.png' width='100')
-                    br
-                    if (user)
-                        div#courses
-                    else
-                        span.label.label-danger: a(href='/users/login').tologin Please Login to view more...
+                    span: b.panel-capt TradeNews
+                div.panel-body#tradenews-div

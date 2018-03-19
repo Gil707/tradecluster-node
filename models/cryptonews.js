@@ -7,8 +7,8 @@ mongoosePaginate.paginate.options = {
     limit: 20
 };
 
-// News Schema
-let newsSchema = mongoose.Schema({
+// CryptoNews Schema
+let cryptonewsSchema = mongoose.Schema({
         title: {
             type: String,
             required: true
@@ -40,6 +40,6 @@ let newsSchema = mongoose.Schema({
         timestamps: true
     });
 
-newsSchema.plugin(mongoosePaginate);
+cryptonewsSchema.plugin(mongoosePaginate);
 
-let News = module.exports = mongoose.model('News', newsSchema);
+let CryptoNews = module.exports = mongoose.model('CryptoNews', cryptonewsSchema);

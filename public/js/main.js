@@ -63,12 +63,13 @@ function loadBTCCourses() {
 }
 
 function loadNews() {
-    $('#news-div').load('/news/refresh');
+    $('#cryptonews-div').load('/cryptonews/refresh');
+    $('#tradenews-div').load('/tradenews/refresh');
 }
 
 
 
-loadBTCCourses();
+// loadBTCCourses();
 loadNews();
 
 setInterval(function () {

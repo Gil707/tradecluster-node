@@ -2,32 +2,32 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../components/auth');
 
-let News = require('../models/news');
+let CryptoNews = require('../models/cryptonews');
 
 
 router.get('/refresh', function (req, res) {
-    News.find({})
-        .sort('-created_at')
+    CryptoNews.find({})
+        .sort('-createdAt')
         .limit(10)
-        .exec(function (err, newsblock) {
+        .exec(function (err, cryptonewsblock) {
             if (err) {
                 console.log(err);
             } else {
-                res.render('news/newslist', {
-                    newsblock: newsblock
+                res.render('cryptonews/cryptonewslist', {
+                    cryptonewsblock: cryptonewsblock
                 });
             }
         });
 });
 
 router.get('/all', function (req, res) {
-   res.redirect('/news/all/page/1')
+   res.redirect('/cryptonews/all/page/1')
 });
 
 
 router.get('/all/page/:id', function (req, res) {
 
-    News.paginate({}, {page: req.params.id, sort: '-created_at'}).then(function (result, err) {
+    CryptoNews.paginate({}, {page: req.params.id, sort: '-createdAt'}).then(function (result, err) {
         if (!err) {
 
             let pagesarr = [];
@@ -35,8 +35,8 @@ router.get('/all/page/:id', function (req, res) {
                 pagesarr.push(i)
             }
 
-            res.render('news/allnews', {
-                allnews: result.docs,
+            res.render('cryptonews/allcryptonews', {
+                allcryptonews: result.docs,
                 pagesarr: pagesarr,
                 page_id: req.params.id
             });

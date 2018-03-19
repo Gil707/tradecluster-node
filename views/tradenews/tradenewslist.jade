@@ -1,0 +1,20 @@
+ul.list-group
+    each tradenews, i in tradenewsblock
+        li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
+            h4: b #{tradenews.title}
+            i.post-date Parsed at #{tradenews.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+            p!= tradenews.preview
+            if (tradenews.img)
+                img(src=tradenews.img, height='120', style='margin-bottom: 8px;')
+            if (user)
+                div.hint Resource:
+                    b &nbsp;#{tradenews.resource}
+                div.hint Origin time and author: #{tradenews.time}
+                br
+                a(href=tradenews.link, target='_blank') View original...
+                p
+            else
+                br
+                span.label.label-danger: a(href='/users/login').tologin Please Login to view more...
+div
+    a(href='/tradenews/all'): b More tradenews...

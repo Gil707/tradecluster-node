@@ -3,6 +3,10 @@ const cheerio = require('cheerio');
 const mongoose = require('mongoose');
 const config = require('../config/database');
 
+let zeroEq = {
+    eq: 0
+};
+
 
 mongoose.connect(config.database);
 let db = mongoose.connection;
@@ -17,7 +21,59 @@ db.on('error', function (err) {
     console.log(err);
 });
 
-let News = require('../models/news');
+let CryptoNews = require('../models/cryptonews');
+let TradeNews = require('../models/tradenews');
+
+function parseZerohedge() {
+    let options = {
+        uri: 'https://www.zerohedge.com/',
+        transform: function (body) {
+            return cheerio.load(body);
+        }
+    };
+
+    rp(options)
+        .then(function ($) {
+            let block = $('#block-zerohedge-content').find('div.view-content').children().eq(zeroEq.eq);
+
+            let tradenews = new TradeNews();
+
+            tradenews.title = block.find('h2.teaser-title').find('a').text().trim();
+            tradenews.img = options.uri + block.find('div.teaser-image').find('img').attr('src');
+            tradenews.link = options.uri + block.find('h2.teaser-title').find('a').attr('href');
+            tradenews.preview = block.find('div.teaser-text > div').find('p').text();
+            tradenews.time = block.find('footer.teaser-details > ul.node__extras').find('li.extras__created').text().trim() + ' GMT';
+            tradenews.resource = 'zerohedge.com';
+
+
+            TradeNews.find({title: tradenews.title}, function (err, docs) {
+                if (err) {
+                    return console.log(err);
+                } else {
+                    if (docs.length) {
+                        console.log(new Date() + ': TradeNews from zerohedge.com is latest');
+                        if (zeroEq.eq === 0) {
+                            zeroEq.eq++;
+                            parseZerohedge();
+                        } else zeroEq.eq = 0;
+                    } else {
+                        tradenews.save(function (err) {
+                            if (err) {
+                                return console.log(err);
+                            } else {
+                                console.log(new Date() + ': TradeNews "' + tradenews.title + '" from zerohedge.com added');
+                            }
+                        });
+                    }
+                }
+            });
+
+
+        })
+        .catch(function (err) {
+            console.log(err)
+        });
+}
 
 function parseCoindesk() {
     let options = {
@@ -31,28 +87,28 @@ function parseCoindesk() {
         .then(function ($) {
             let block = $('#content').children().first();
 
-            let news = new News();
+            let cryptonews = new CryptoNews();
 
-            news.title = block.find('div.post-info').find('a.fade').text();
-            news.img = block.find('img.wp-post-image').attr('data-cfsrc');
-            news.link = block.find('a.fade').attr('href');
-            news.preview = block.find('p').last().text();
-            news.time = block.find('p').first().text();
-            news.resource = 'coindesk.com';
+            cryptonews.title = block.find('div.post-info').find('a.fade').text();
+            cryptonews.img = block.find('img.wp-post-image').attr('data-cfsrc');
+            cryptonews.link = block.find('a.fade').attr('href');
+            cryptonews.preview = block.find('p').last().text();
+            cryptonews.time = block.find('p').first().text();
+            cryptonews.resource = 'coindesk.com';
 
 
-            News.find({title: news.title}, function (err, docs) {
+            CryptoNews.find({title: cryptonews.title}, function (err, docs) {
                 if (err) {
                     return console.log(err);
                 } else {
                     if (docs.length) {
-                        console.log(new Date() + ': News from coindesk.com is latest');
+                        console.log(new Date() + ': CryptoNews from coindesk.com is latest');
                     } else {
-                        news.save(function (err) {
+                        cryptonews.save(function (err) {
                             if (err) {
                                 return console.log(err);
                             } else {
-                                console.log(new Date() + ': News "' + news.title + '" from coindesk.com added');
+                                console.log(new Date() + ': CryptoNews "' + cryptonews.title + '" from coindesk.com added');
                             }
                         });
                     }
@@ -78,27 +134,27 @@ function parseCryptopotato() {
         .then(function ($) {
             let block = $('#list-items').children().first();
 
-            let news = new News();
+            let cryptonews = new CryptoNews();
 
-            news.title = block.find('a.image-link').attr('title');
-            news.img = block.find('img.media-object').attr('src');
-            news.link = block.find('a.image-link').attr('href');
-            news.preview = block.find('div.entry-excerpt > p').text();
-            news.time = block.find('span.entry-date > a').text() + ' ' + block.find('span.entry-time').text() + ' | ' + block.find('span.entry-user > a').text();
-            news.resource = 'cryptopotato.com';
+            cryptonews.title = block.find('a.image-link').attr('title');
+            cryptonews.img = block.find('img.media-object').attr('src');
+            cryptonews.link = block.find('a.image-link').attr('href');
+            cryptonews.preview = block.find('div.entry-excerpt > p').text();
+            cryptonews.time = block.find('span.entry-date > a').text() + ' ' + block.find('span.entry-time').text() + ' | ' + block.find('span.entry-user > a').text();
+            cryptonews.resource = 'cryptopotato.com';
 
-            News.find({title: news.title}, function (err, docs) {
+            CryptoNews.find({title: cryptonews.title}, function (err, docs) {
                 if (err) {
                     return console.log(err);
                 } else {
                     if (docs.length) {
-                        console.log(new Date() + ': News from cryptopotato.com is latest');
+                        console.log(new Date() + ': CryptoNews from cryptopotato.com is latest');
                     } else {
-                        news.save(function (err) {
+                        cryptonews.save(function (err) {
                             if (err) {
                                 return console.log(err);
                             } else {
-                                console.log(new Date() + ': News "' + news.title + '" from cryptopotato.com added');
+                                console.log(new Date() + ': CryptoNews "' + cryptonews.title + '" from cryptopotato.com added');
                             }
                         });
                     }
@@ -114,8 +170,11 @@ function parseCryptopotato() {
 
 // parseCoindesk();
 // parseCryptopotato();
+// parseZerohedge();
 
 setInterval(function () {
+    console.log('Start parsing...');
     parseCoindesk();
     parseCryptopotato();
+    parseZerohedge();
 }, 60000);

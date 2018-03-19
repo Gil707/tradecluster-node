@@ -1,0 +1,20 @@
+ul.list-group
+    each cryptonews, i in cryptonewsblock
+        li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
+            h4: b #{cryptonews.title}
+            i.post-date Parsed at #{cryptonews.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+            p!= cryptonews.preview
+            if (cryptonews.img)
+                img(src=cryptonews.img, height='120', style='margin-bottom: 8px;')
+            if (user)
+                div.hint Resource:
+                    b &nbsp;#{cryptonews.resource}
+                div.hint Origin time and author: #{cryptonews.time}
+                br
+                a(href=cryptonews.link, target='_blank') View original...
+                p
+            else
+                br
+                span.label.label-danger: a(href='/users/login').tologin Please Login to view more...
+div
+    a(href='/cryptonews/all'): b More cryptonews...

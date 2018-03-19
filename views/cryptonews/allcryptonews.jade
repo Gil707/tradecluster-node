@@ -1,0 +1,60 @@
+extends ../layout
+
+block content
+    h2 News
+    div.row
+        div.col-lg-8
+            div
+                h5 Pages:
+                if (page_id > pagesarr[0])
+                    a(href='/cryptonews/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
+                    span &nbsp;&nbsp;
+                else
+                    span.hint.glyphicon.glyphicon-arrow-left(style='color:lightgray')
+                    span &nbsp;&nbsp;
+                each page, i in pagesarr
+                    if (page == page_id)
+                        span: b #{page}&nbsp;
+                    else
+                        span: a(href='/cryptonews/all/page/' + page)= page
+                        span &nbsp;
+                if (page_id < pagesarr.length)
+                    a(href='/cryptonews/all/page/' + (parseInt(page_id)+1)): span.hint.glyphicon.glyphicon-arrow-right
+                else
+                    span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
+            ul.list-group
+            each cryptonews, i in allcryptonews
+                li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
+                    h4: b #{cryptonews.title}
+                    i.post-date Parsed at #{cryptonews.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                    p!= cryptonews.preview
+                    if (cryptonews.img)
+                        img(src=cryptonews.img, height='300', style='margin-bottom: 8px;')
+                    if (user)
+                        div.hint Resource:
+                            b &nbsp;#{cryptonews.resource}
+                        div.hint Origin time and author: #{cryptonews.time}
+                        br
+                        a(href=cryptonews.link, target='_blank') View original...
+                    else
+                        br
+                        span.label.label-danger: a(href='/users/login').tologin Please Login to view more...
+            div
+                h5 Pages:
+                    if (page_id > pagesarr[0])
+                        a(href='/cryptonews/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
+                        span &nbsp;
+                    else
+                        span.hint.glyphicon.glyphicon-arrow-left(style='color:lightgray')
+                        span &nbsp;&nbsp;
+                    each page, i in pagesarr
+                        if (page == page_id)
+                            span: b #{page}&nbsp;
+                        else
+                            span: a(href='/cryptonews/all/page/' + page)= page
+                            span &nbsp;
+                    if (page_id < pagesarr.length)
+                        a(href='/cryptonews/all/page/' + (parseInt(page_id) + 1)): span.hint.glyphicon.glyphicon-arrow-right
+                    else
+                        span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
+        div.col-lg-4
