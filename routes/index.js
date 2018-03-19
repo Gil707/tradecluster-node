@@ -7,10 +7,9 @@ let multipartMiddleware = multipart();
 
 
 let Post = require('../models/post');
-let CryptoNews = require('../models/cryptonews');
+let TcNews = require('../models/tcnews');
 
 let fn = require('../components/fn');
-
 
 
 // /* GET home page. */
@@ -28,15 +27,25 @@ router.post('/uploader', multipartMiddleware, auth.ensureAuthenticated, fn);
 // Home Route
 router.get('/', function (req, res) {
     Post.find({})
-        .sort('-created_at')
+        .sort('-createdAt')
         .limit(6)
         .exec(function (err, posts) {
             if (err) {
                 console.log(err);
             } else {
-                res.render('index', {
-                    posts: posts
-                });
+                TcNews.find({})
+                    .sort('-createdAt')
+                    .limit(1)
+                    .exec(function (err, tcnews) {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            res.render('index', {
+                                posts: posts,
+                                tcnewsblock: tcnews
+                            });
+                        }
+                    });
             }
         });
 });

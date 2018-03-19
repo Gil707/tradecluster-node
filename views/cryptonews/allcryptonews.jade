@@ -29,7 +29,7 @@ block content
                     i.post-date Parsed at #{cryptonews.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
                     p!= cryptonews.preview
                     if (cryptonews.img)
-                        img(src=cryptonews.img, height='300', style='margin-bottom: 8px;')
+                        img(src=cryptonews.img, style='margin-bottom: 8px; max-height: 300px').image-wrap
                     if (user)
                         div.hint Resource:
                             b &nbsp;#{cryptonews.resource}

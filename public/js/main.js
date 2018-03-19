@@ -49,13 +49,14 @@ function loadBTCCourses() {
 
         let items = [];
         let date = new Date($.now());
-        items.push("<span class='crs_timehead'>Last refresh in " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "</span>");
-        items.push("<ul>");
+        items.push("<span style='margin-right: 4px'>Courses: </span>")
+        items.push("<ul style='display: inline; padding: 0'>");
 
         $.each(data, function (key, val) {
-            items.push("<li class='crs_itm_val'>" + key + "/BTC : " + val['last'].toFixed(2) + "</li>");
+            items.push("<li class='crs_itm_val'>" + key + "/BTC : " + val['last'].toFixed(2) + "</li><span style='color: #666699; font-size: 10px; margin: 0 3px'> | </span>");
         });
         items.push("<ul/>");
+        items.push("<span class='hint'>Last refresh in " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "</span>");
 
         $("#courses").html(items);
 
@@ -69,8 +70,9 @@ function loadNews() {
 
 
 
-// loadBTCCourses();
 loadNews();
+loadBTCCourses();
+
 
 setInterval(function () {
     loadBTCCourses();

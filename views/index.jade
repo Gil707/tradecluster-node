@@ -2,8 +2,15 @@ extends layout
 
 block content
     div.row.white-text.squipped
-        div.col-lg-12.panel.panel-default
-            h4(style='color: #ffffb3') We are opening at 31 march. You can send request for getting free month subscribing!
+        div.col-lg-12.panel.panel-default(style='padding: 0')
+            //h4(style='color: #ffffb3') We are opening at 31 march. You can send request for getting free month subscribing!
+            ul.list-group
+                each tcnews, i in tcnewsblock
+                    li.list-group-item
+                        i.pull-right.post-date #{tcnews.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}&nbsp; | &nbsp;
+                        h4: b: a(href="/tcnews/" + tcnews._id) #{tcnews.caption}
+                        span.pull-right.hint: a(href='/tcnews/all'): b View all news...
+                        p!= tcnews.preview
     div.row
         div.col-lg-6
             div.panel.panel-default
@@ -35,3 +42,7 @@ block content
                 div.panel-heading
                     span: b.panel-capt TradeNews
                 div.panel-body#tradenews-div
+    div.row
+        div.panel.panel-default
+            div.panel-body
+                div#courses

@@ -5,7 +5,7 @@ ul.list-group
             i.post-date Parsed at #{cryptonews.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
             p!= cryptonews.preview
             if (cryptonews.img)
-                img(src=cryptonews.img, height='120', style='margin-bottom: 8px;')
+                img(src=cryptonews.img, height='120', style='margin-bottom: 8px;').image-wrap
             if (user)
                 div.hint Resource:
                     b &nbsp;#{cryptonews.resource}

@@ -1,0 +1,41 @@
+extends ../layout
+
+block content
+
+    //h1 #{title}
+    form(method='POST', action='/tcnews/add')
+        div.row
+            div.col-lg-7
+                h3 Add TradeCluster news
+                div.form-group-sm
+                    label Caption:
+                    input.form-control(type='text', name='caption')
+                div.form-group-sm
+                    label Preview:
+                    textarea.form-control(name='preview', id='tcnews-preview', style='height: 80px')
+                div.form-group-sm
+                    label Additional text:
+                    textarea.form-control(name='text', id='tcnews-text')
+                br
+                input.btn.btn-primary(type='submit', value='Submit')
+            div.col-lg-5
+                h3 Recent TradeCluster news
+                br
+                ul.list-group
+                    each tcnews, i in tcnewsblock
+                        li.list-group-item
+                            h5: a(href="/tcnews/"+tcnews._id) #{tcnews.caption}
+                                i.pull-right.tcnews-date #{tcnews.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                            a.btn.btn-default(href='/tcnews/edit/' + tcnews._id) Edit
+                            i &nbsp;
+                            a.btn.btn-danger(href='/tcnews/delete/' + tcnews._id) Delete
+
+    script(src='/js/ckeditor/ckeditor.js')
+    script.
+        CKEDITOR.replace('tcnews-text', {
+            toolbar: 'Full'
+        })
+    script.
+        CKEDITOR.replace('tcnews-preview', {
+            toolbar: 'Basic'
+        })

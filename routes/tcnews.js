@@ -2,19 +2,19 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../components/auth');
 
-// Post Model
-let Post = require('../models/post');
+// TcNews Model
+let TcNews = require('../models/tcnews');
 // User Model
 let User = require('../models/user');
 
 router.get('/all', function (req, res) {
-    res.redirect('/posts/all/page/1')
+    res.redirect('/tcnews/all/page/1')
 });
 
 
 router.get('/all/page/:id', function (req, res) {
 
-    Post.paginate({}, {page: req.params.id, sort: '-createdAt'}).then(function (result, err) {
+    TcNews.paginate({}, {page: req.params.id, sort: '-createdAt'}).then(function (result, err) {
         if (!err) {
 
             let pagesarr = [];
@@ -22,8 +22,8 @@ router.get('/all/page/:id', function (req, res) {
                 pagesarr.push(i)
             }
 
-            res.render('post/allposts', {
-                allposts: result.docs,
+            res.render('tcnews/alltcnews', {
+                alltcnews: result.docs,
                 pagesarr: pagesarr,
                 page_id: req.params.id
             });
@@ -37,16 +37,16 @@ router.get('/all/page/:id', function (req, res) {
 
 // Add Route
 router.get('/add', auth.ensureAuthenticated, function (req, res) {
-    Post.find({})
+    TcNews.find({})
         .sort('-createdAt')
-        .exec(function (err, posts) {
+        .exec(function (err, tcnews) {
             if (err) {
                 console.log(err);
             } else {
-                res.render('post/add_post', {
-                    title: 'My posts',
+                res.render('tcnews/add_tcnews', {
+                    title: 'My tcnewss',
                     user: req.user,
-                    posts: posts
+                    tcnewsblock: tcnews
                 });
             }
         });
@@ -61,22 +61,22 @@ router.post('/add', function (req, res) {
     let errors = req.validationErrors();
 
     if (errors) {
-        res.render('post/add_post', {
-            title: 'Add Post',
+        res.render('tcnews/add_tcnews', {
+            title: 'Add TcNews',
             errors: errors
         });
     } else {
-        let post = new Post();
-        post.caption = req.body.caption;
-        post.author = req.user._id;
-        post.preview = req.body.preview;
-        post.text = req.body.text;
+        let tcnews = new TcNews();
+        tcnews.caption = req.body.caption;
+        tcnews.author = req.user._id;
+        tcnews.preview = req.body.preview;
+        tcnews.text = req.body.text;
 
-        post.save(function (err) {
+        tcnews.save(function (err) {
             if (err) {
                 return console.log(err);
             } else {
-                req.flash('success', 'Post Added');
+                req.flash('success', 'TcNews Added');
                 res.redirect('/');
             }
         });
@@ -86,16 +86,16 @@ router.post('/add', function (req, res) {
 // Load Edit Form
 router.get('/edit/:id', auth.ensureAuthenticated, function (req, res) {
 
-    Post.findById(req.params.id, function (err, post) {
+    TcNews.findById(req.params.id, function (err, tcnews) {
         if (err) {
             return console.log(err)
-        } else if (!(req.user._id.equals(post.author)) || !(req.user.login === 'admin')) {
+        } else if (!(req.user._id.equals(tcnews.author)) || !(req.user.login === 'admin')) {
             req.flash('danger', 'Not Authorized');
             res.redirect('/');
         } else {
-            res.render('post/edit_post', {
-                title: 'Edit Post',
-                post: post
+            res.render('tcnews/edit_tcnews', {
+                title: 'Edit TcNews',
+                tcnews: tcnews
             });
         }
     });
@@ -103,33 +103,33 @@ router.get('/edit/:id', auth.ensureAuthenticated, function (req, res) {
 
 // Update Submit POST Route
 router.post('/edit/:id', function (req, res) {
-    let post = {};
-    post.caption = req.body.caption;
-    post.author = req.user._id;
-    post.preview = req.body.preview;
-    post.text = req.body.text;
+    let tcnews = {};
+    tcnews.caption = req.body.caption;
+    tcnews.author = req.user._id;
+    tcnews.preview = req.body.preview;
+    tcnews.text = req.body.text;
 
     let query = {_id: req.params.id};
 
-    Post.update(query, post, function (err) {
+    TcNews.update(query, tcnews, function (err) {
         if (err) {
             return console.log(err);
         } else {
-            req.flash('success', 'Post Updated');
-            res.redirect('/posts/add');
+            req.flash('success', 'TcNews Updated');
+            res.redirect('/tcnewss/add');
         }
     });
 });
 
-// Delete Post
+// Delete TcNews
 router.get('/delete/:id', function (req, res) {
-    Post.findById(req.params.id, function (err, post) {
+    TcNews.findById(req.params.id, function (err, tcnews) {
         
-        if (req.user._id.equals(post.author) || req.user.status === 4) {
-            Post.findById(req.params.id).remove().exec(function (err, data) {
+        if (req.user._id.equals(tcnews.author) || req.user.status === 4) {
+            TcNews.findById(req.params.id).remove().exec(function (err, data) {
                 if (!err) {
-                    req.flash('success', 'Post Deleted');
-                    res.redirect('/posts/add');
+                    req.flash('success', 'TcNews Deleted');
+                    res.redirect('/tcnewss/add');
                 }
             });
         } else {
@@ -138,17 +138,17 @@ router.get('/delete/:id', function (req, res) {
     });
 });
 
-// Get Single Post
+// Get Single TcNews
 router.get('/:id', function (req, res) {
-    Post.findById(req.params.id, function (err, post) {
-        if (post) {
-            User.findById(post.author, function (err, user) {
+    TcNews.findById(req.params.id, function (err, tcnews) {
+        if (tcnews) {
+            User.findById(tcnews.author, function (err, user) {
                 if (err) {
                     res.status(500).send();
                 } else {
-                    res.render('post/post', {
+                    res.render('tcnews/tcnews', {
                         username: user.name,
-                        post: post
+                        tcnews: tcnews
                     });
                 }
             });

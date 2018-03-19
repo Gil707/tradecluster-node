@@ -1,13 +1,13 @@
 extends ../layout
 
 block content
-    h2 News
+    h2 TradeCluster News
     div.row
         div.col-lg-8
             div
                 h5 Pages:
                 if (page_id > pagesarr[0])
-                    a(href='/tradenews/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
+                    a(href='/tcnews/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
                     span &nbsp;&nbsp;
                 else
                     span.hint.glyphicon.glyphicon-arrow-left(style='color:lightgray')
@@ -16,33 +16,28 @@ block content
                     if (page == page_id)
                         span: b #{page}&nbsp;
                     else
-                        span: a(href='/tradenews/all/page/' + page)= page
+                        span: a(href='/posts/all/page/' + page)= page
                         span &nbsp;
                 if (page_id < pagesarr.length)
-                    a(href='/tradenews/all/page/' + (parseInt(page_id)+1)): span.hint.glyphicon.glyphicon-arrow-right
+                    a(href='/posts/all/page/' + (parseInt(page_id)+1)): span.hint.glyphicon.glyphicon-arrow-right
                 else
                     span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
+
             ul.list-group
-            each tradenews, i in alltradenews
+            each post, i in allposts
                 li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
-                    h4: b #{tradenews.title}
-                    i.post-date Parsed at #{tradenews.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
-                    p!= tradenews.preview
-                    if (tradenews.img)
-                        img(src=tradenews.img, style='margin-bottom: 8px; max-height: 300px').image-wrap
+                    i.pull-right.post-date #{post.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                    h3: b #{post.caption}
+                    p!= post.preview
                     if (user)
-                        div.hint Resource:
-                            b &nbsp;#{tradenews.resource}
-                        div.hint Origin time and author: #{tradenews.time}
-                        br
-                        a(href=tradenews.link, target='_blank') View original...
+                        a(href="/posts/" + post._id) Learn more...
                     else
-                        br
                         span.label.label-danger: a(href='/users/login').tologin Please Login to view more...
+
             div
                 h5 Pages:
                     if (page_id > pagesarr[0])
-                        a(href='/tradenews/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
+                        a(href='/posts/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
                         span &nbsp;
                     else
                         span.hint.glyphicon.glyphicon-arrow-left(style='color:lightgray')
@@ -51,10 +46,10 @@ block content
                         if (page == page_id)
                             span: b #{page}&nbsp;
                         else
-                            span: a(href='/tradenews/all/page/' + page)= page
+                            span: a(href='/posts/all/page/' + page)= page
                             span &nbsp;
                     if (page_id < pagesarr.length)
-                        a(href='/tradenews/all/page/' + (parseInt(page_id) + 1)): span.hint.glyphicon.glyphicon-arrow-right
+                        a(href='/posts/all/page/' + (parseInt(page_id) + 1)): span.hint.glyphicon.glyphicon-arrow-right
                     else
                         span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
         div.col-lg-4

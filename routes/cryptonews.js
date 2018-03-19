@@ -6,9 +6,13 @@ let CryptoNews = require('../models/cryptonews');
 
 
 router.get('/refresh', function (req, res) {
+
+    let skip = (req.user && req.user.status > 1) ? 0 : 3;
+
     CryptoNews.find({})
         .sort('-createdAt')
         .limit(10)
+        .skip(skip)
         .exec(function (err, cryptonewsblock) {
             if (err) {
                 console.log(err);
@@ -27,7 +31,9 @@ router.get('/all', function (req, res) {
 
 router.get('/all/page/:id', function (req, res) {
 
-    CryptoNews.paginate({}, {page: req.params.id, sort: '-createdAt'}).then(function (result, err) {
+    let skip = (req.user && req.user.status > 1) ? 0 : 3;
+
+    CryptoNews.paginate({}, {page: req.params.id, sort: '-createdAt', offset: skip}).then(function (result, err) {
         if (!err) {
 
             let pagesarr = [];

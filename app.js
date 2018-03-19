@@ -89,6 +89,7 @@ const APP_PORT = 3000;
 // Route Files
     let index = require('./routes/index');
     let posts = require('./routes/posts');
+    let tcnews = require('./routes/tcnews');
     let users = require('./routes/users');
     let strategies = require('./routes/strategies');
     let botconfigs = require('./routes/botconfigs');
@@ -98,6 +99,7 @@ const APP_PORT = 3000;
 
     app.use('/', index);
     app.use('/posts', posts);
+    app.use('/tcnews', tcnews);
     app.use('/users', users);
     app.use('/strategies', strategies);
     app.use('/botconfigs', botconfigs);
