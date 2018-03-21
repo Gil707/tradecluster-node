@@ -4,11 +4,38 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const recaptcha = require('recaptcha').Recaptcha;
 
+const auth = require('../components/auth');
+
 let User = require('../models/user');
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-    res.send('respond with a resource');
+
+router.get('/all', auth.ensureAuthenticated, function (req, res, next) {
+    res.redirect('/users/all/page/1')
+
+});
+
+router.get('/all/page/:id', function (req, res) {
+
+    User.paginate({}, {page: req.params.id, sort: '-createdAt'}).then(function (result, err) {
+        if (!err) {
+
+            let pagesarr = [];
+            for(let i = 1; i <= result.pages; i++) {
+                pagesarr.push(i)
+            }
+
+            res.render('users/list', {
+                users: result.docs,
+                pagesarr: pagesarr,
+                page_id: req.params.id
+            });
+
+        } else {
+            console.log(err);
+            res.end('Error');
+        }
+    });
 });
 
 router.get('/signup', function (req, res, next) {

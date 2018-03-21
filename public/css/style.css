@@ -385,3 +385,11 @@ hr {
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
+
+.table-darkstyle tbody tr td {
+    border-top: 1px dotted #9494b8
+}
+
+.table-darkstyle thead tr th {
+    border-bottom: 2px solid #b3b3cc
+}

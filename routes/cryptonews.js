@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../components/auth');
+const env = require('../config/env');
 
 let CryptoNews = require('../models/cryptonews');
 
 
 router.get('/refresh', function (req, res) {
 
-    let skip = (req.user && req.user.status > 1) ? 0 : 3;
+    let filter = (req.user && req.user.status > 1) ? {} : { createdAt: { $lt: new Date(Date.now() - env.awaitTimeNews) } };
 
-    CryptoNews.find({})
+    CryptoNews.find(filter)
         .sort('-createdAt')
         .limit(10)
-        .skip(skip)
         .exec(function (err, cryptonewsblock) {
             if (err) {
                 console.log(err);
@@ -31,9 +31,9 @@ router.get('/all', function (req, res) {
 
 router.get('/all/page/:id', function (req, res) {
 
-    let skip = (req.user && req.user.status > 1) ? 0 : 3;
+    let filter = (req.user && req.user.status > 1) ? {} : { createdAt: { $lt: new Date(Date.now() - env.awaitTimeNews) } };
 
-    CryptoNews.paginate({}, {page: req.params.id, sort: '-createdAt', offset: skip}).then(function (result, err) {
+    CryptoNews.paginate(filter, {page: req.params.id, sort: '-createdAt'}).then(function (result, err) {
         if (!err) {
 
             let pagesarr = [];

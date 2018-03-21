@@ -1,18 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../components/auth');
+const env = require('../config/env');
 
 let TradeNews = require('../models/tradenews');
 
-
 router.get('/refresh', function (req, res) {
 
-    let skip = (req.user && req.user.status > 1) ? 0 : 3;
+    let filter = (req.user && req.user.status > 1) ? {} : { createdAt: { $lt: new Date(Date.now() - env.awaitTimeNews) } };
 
-    TradeNews.find({})
+    TradeNews.find(filter)
         .sort('-createdAt')
         .limit(10)
-        .skip(skip)
         .exec(function (err, tradenewsblock) {
             if (err) {
                 console.log(err);
@@ -31,9 +30,9 @@ router.get('/all', function (req, res) {
 
 router.get('/all/page/:id', function (req, res) {
 
-    let skip = (req.user && req.user.status > 1) ? 0 : 3;
+    let filter = (req.user && req.user.status > 1) ? {} : { createdAt: { $lt: new Date(Date.now() - env.awaitTimeNews) } };
 
-    TradeNews.paginate({}, {page: req.params.id, sort: '-createdAt', offset: skip}).then(function (result, err) {
+    TradeNews.paginate(filter, {page: req.params.id, sort: '-createdAt'}).then(function (result, err) {
         if (!err) {
 
             let pagesarr = [];

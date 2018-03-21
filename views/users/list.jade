@@ -1,0 +1,71 @@
+extends ../layout
+
+block content
+    h2 Users
+    div.row
+        div.col-lg-8
+            div.margin-bottom
+                h5 Pages:
+                if (page_id > pagesarr[0])
+                    a(href='/posts/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
+                    span &nbsp;&nbsp;
+                else
+                    span.hint.glyphicon.glyphicon-arrow-left(style='color:lightgray')
+                    span &nbsp;&nbsp;
+                each page, i in pagesarr
+                    if (page == page_id)
+                        span: b #{page}&nbsp;
+                    else
+                        span: a(href='/posts/all/page/' + page)= page
+                        span &nbsp;
+                if (page_id < pagesarr.length)
+                    a(href='/users/control/page/' + (parseInt(page_id)+1)): span.hint.glyphicon.glyphicon-arrow-right
+                else
+                    span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
+
+
+            table.table.table-responsive.table-darkstyle
+                thead
+                    tr
+                        th Login
+                        th Name
+                        th Email
+                        th Status
+                        th Balance
+                        th Reputation
+                        th Paid till
+                        th Registered
+                tbody
+                    each user, i in users
+                        if (user.status > 1)
+                            - color = 'lime'
+                        else
+                            - color = ''
+                        tr(style='color: ' + color)
+                            td: a(href='#'): b= user.login
+                            td= user.name
+                            td= user.email
+                            td= user.status
+                            td= user.balance
+                            td= user.reputation
+                            td= user.paid_till
+                            td= user.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')
+            div
+                h5 Pages:
+                    if (page_id > pagesarr[0])
+                        a(href='/posts/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
+                        span &nbsp;
+                    else
+                        span.hint.glyphicon.glyphicon-arrow-left(style='color:lightgray')
+                        span &nbsp;&nbsp;
+                    each page, i in pagesarr
+                        if (page == page_id)
+                            span: b #{page}&nbsp;
+                        else
+                            span: a(href='/posts/all/page/' + page)= page
+                            span &nbsp;
+                    if (page_id < pagesarr.length)
+                        a(href='/posts/all/page/' + (parseInt(page_id) + 1)): span.hint.glyphicon.glyphicon-arrow-right
+                    else
+                        span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
+        div.col-lg-4

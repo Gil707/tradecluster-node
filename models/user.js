@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
+ObjectId = mongoose.Types.ObjectId;
 
+mongoosePaginate.paginate.options = {
+    lean: true,
+    limit: 10
+};
 // User schema
 
 let UserSchema = mongoose.Schema({
@@ -45,5 +51,7 @@ let UserSchema = mongoose.Schema({
     {
         timestamps: true
     });
+
+UserSchema.plugin(mongoosePaginate);
 
 let User = module.exports = mongoose.model('User', UserSchema);
