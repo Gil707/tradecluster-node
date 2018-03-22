@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 ObjectId = mongoose.Types.ObjectId;
 
+let uniqueValidator = require('mongoose-unique-validator');
+
 mongoosePaginate.paginate.options = {
     lean: true,
     limit: 10
@@ -25,6 +27,10 @@ let UserSchema = mongoose.Schema({
             unique: true,
             lowercase: true
         },
+        phone: {
+            type: String,
+            unique: true,
+        },
         password: {
             type: String,
             required: true
@@ -46,6 +52,10 @@ let UserSchema = mongoose.Schema({
         },
         paid_till: {
             type: Date
+        },
+        blocked: {
+            type: Boolean,
+            default: false
         }
     },
     {
@@ -53,5 +63,6 @@ let UserSchema = mongoose.Schema({
     });
 
 UserSchema.plugin(mongoosePaginate);
+UserSchema.plugin(uniqueValidator);
 
 let User = module.exports = mongoose.model('User', UserSchema);

@@ -24,13 +24,13 @@ block content
                     span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
 
             ul.list-group
-            each post, i in allposts
+            each news, i in alltcnews
                 li.list-group.list-unstyled(style='border-bottom: 1px dotted #ABABAB')
-                    i.pull-right.post-date #{post.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
-                    h3: b #{post.caption}
-                    p!= post.preview
+                    i.pull-right.post-date #{news.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                    h3: b #{news.caption}
+                    p!= news.preview
                     if (user)
-                        a(href="/posts/" + post._id) Learn more...
+                        a(href="/tcnews/" + news._id) Learn more...
                     else
                         span.label.label-danger: a(href='/users/login').tologin Please Login to view more...
 

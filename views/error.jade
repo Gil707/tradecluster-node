@@ -1,6 +1,9 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  br
+  h2(style='color: #ffcccc')= message
+  h4= error.status
+  br
+  span.label.label-danger #{error.stack}
+  br

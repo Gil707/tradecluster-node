@@ -9,7 +9,7 @@ let Cryptr = require('cryptr'),
 
 // Bot Models
 let BotConfig = require('../models/botconfig');
-let BotOrder = require('../models/botorder');
+let Order = require('../models/order');
 // User Model
 let User = require('../models/user');
 
@@ -25,7 +25,7 @@ router.get('/gekko', auth.ensureAuthenticated, function (req, res) {
     BotConfig.find({
         bot: 'gekko'
     })
-        .sort('-created_at')
+        .sort('-createdAt')
         .exec(function (err, botcfgs) {
             if (err) {
                 console.log(err);
@@ -44,7 +44,7 @@ router.get('/haas', auth.ensureAuthenticated, function (req, res) {
     BotConfig.find({
         bot: 'haas'
     })
-        .sort('-created_at')
+        .sort('-createdAt')
         .exec(function (err, botcfgs) {
             if (err) {
                 console.log(err);
@@ -71,9 +71,9 @@ router.get('/gimmer', auth.ensureAuthenticated, function (req, res) {
     res.render('botconfig/gimmer', {});
 });
 
-router.get('/admin', auth.ensureAuthenticated, function (req, res) {
+router.get('/admin', auth.ensureManager, function (req, res) {
     BotConfig.find({})
-        .sort('-created_at')
+        .sort('-createdAt')
         .exec(function (err, configs) {
             if (err) {
                 console.log(err);
@@ -86,12 +86,12 @@ router.get('/admin', auth.ensureAuthenticated, function (req, res) {
         });
 });
 
-router.get('/admin/forms/:bot', auth.ensureAuthenticated, function (req, res) {
+router.get('/admin/forms/:bot', auth.ensureManager, function (req, res) {
     bot = req.params.bot;
     res.render('botconfig/forms/' + bot, {});
 });
 
-router.post('/add', auth.ensureAuthenticated, function (req, res) {
+router.post('/add', auth.ensureManager, function (req, res) {
 
     req.checkBody('bot', 'Bot is required').notEmpty();
     req.checkBody('cfg_name', 'Name of config is required').notEmpty();
@@ -158,7 +158,7 @@ router.post('/add', auth.ensureAuthenticated, function (req, res) {
 });
 
 // Load Edit Form
-router.get('/edit/:id', auth.ensureAuthenticated, function (req, res) {
+router.get('/edit/:id', auth.ensureManager, function (req, res) {
 
     BotConfig.findById(req.params.id, function (err, botcfg) {
         if (err) {
@@ -176,7 +176,7 @@ router.get('/edit/:id', auth.ensureAuthenticated, function (req, res) {
 });
 
 // Update Submit POST Route
-router.post('/edit/:id', auth.ensureAuthenticated, function (req, res) {
+router.post('/edit/:id', auth.ensureManager, function (req, res) {
     let botcfg = {};
     botcfg.name = req.body.cfg_name;
     botcfg.version = req.body.cfg_ver;
@@ -198,7 +198,7 @@ router.post('/edit/:id', auth.ensureAuthenticated, function (req, res) {
 });
 
 // Delete BotConfig
-router.get('/delete/:id', auth.ensureAuthenticated, function (req, res) {
+router.get('/delete/:id', auth.ensureManager, function (req, res) {
     BotConfig.findById(req.params.id, function (err, botcfg) {
 
         if (req.user._id.equals(botcfg.author) || req.user.status === 4) {
@@ -215,37 +215,40 @@ router.get('/delete/:id', auth.ensureAuthenticated, function (req, res) {
 });
 
 // Get BotConfig
-router.get('/:id', auth.ensureAuthenticated, function (req, res) {
-    BotConfig.findById(req.params.id, function (err, botcfg) {
-        if (botcfg) {
-            User.findById(botcfg.author, function (err, user) {
-                if (err) {
-                    res.status(500).send();
-                } else {
-                    res.render('botconfig/botconf', {
-                        username: user.name,
-                        botcfg: botcfg
-                    });
-                }
-            });
-        }
-        else res.status(500).send();
-    });
+router.get('/:id', auth.payedResource, function (req, res, next) {
+
+        BotConfig.findById(req.params.id, function (err, botcfg) {
+            if (botcfg) {
+                User.findById(botcfg.author, function (err, user) {
+                    if (err) {
+                        res.status(500).send();
+                    } else {
+                        res.render('botconfig/botconf', {
+                            username: user.name,
+                            botcfg: botcfg
+                        });
+                    }
+                });
+            }
+            else res.status(500).send();
+        });
 });
 
-// Post BotOrder
+// Post Order
 router.get('/buy/:id', auth.ensureAuthenticated, function (req, res) {
     BotConfig.findById(req.params.id, function (err, botcfg) {
         if (botcfg) {
             if (!err) {
 
-                let botorder = new BotOrder();
+                let order = new Order();
 
-                botorder.user_id = req.user._id;
-                botorder.cfg_id = botcfg._id;
-                botorder.addr = '1GMnp2zKcBr2SctLA1magPr9rSXHriLSz5';
+                order.user_id = req.user._id;
+                order.type = 1;
+                order.cfg_id = botcfg._id;
+                order.cfg_name = botcfg.name;
+                order.addr = '1GMnp2zKcBr2SctLA1magPr9rSXHriLSz5';
 
-                botorder.save(function (err) {
+                order.save(function (err) {
                     if (err) {
                         req.flash('error', 'You already bought this');
                         res.redirect('/botconfigs/' + botcfg.bot);
@@ -254,7 +257,7 @@ router.get('/buy/:id', auth.ensureAuthenticated, function (req, res) {
                         req.flash('success', 'Order placed');
                         res.render('botconfig/buybtcfg', {
                             botcfg: botcfg,
-                            botorder: botorder
+                            botorder: order
                         });
                     }
                 });

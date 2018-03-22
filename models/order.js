@@ -1,13 +1,22 @@
 const mongoose = require('mongoose');
 let uniqueValidator = require('mongoose-unique-validator');
 
-// BotOrder Schema
-let botorderSchema = mongoose.Schema({
+// Order Schema
+let orderSchema = mongoose.Schema({
         user_id: {
             type: String,
             required: true
         },
+        type: {
+            // botcfg, strategy, analizes, post
+            type: Number,
+            required: true
+        },
         cfg_id: {
+            type: String,
+            required: true
+        },
+        cfg_name: {
             type: String,
             required: true
         },
@@ -27,8 +36,8 @@ let botorderSchema = mongoose.Schema({
         timestamps: true
     });
 
-botorderSchema.index({user_id: 1, cfg_id: 1}, {unique: true});
+orderSchema.index({user_id: 1, cfg_id: 1}, {unique: true});
 
-botorderSchema.plugin(uniqueValidator);
+orderSchema.plugin(uniqueValidator);
 
-let BotOrder = module.exports = mongoose.model('BotOrder', botorderSchema);
+let Order = module.exports = mongoose.model('Order', orderSchema);

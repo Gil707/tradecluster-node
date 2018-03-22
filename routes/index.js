@@ -7,6 +7,7 @@ let multipartMiddleware = multipart();
 
 
 let Post = require('../models/post');
+let Order = require('../models/order');
 let TcNews = require('../models/tcnews');
 
 let fn = require('../components/fn');
@@ -59,9 +60,19 @@ router.get('/faq', function (req, res, next) {
 });
 
 router.get('/profile', auth.ensureAuthenticated, function (req, res, next) {
-    res.render('site/profile', {
-        user: req.user
-    });
+    Order.find()
+        .where({user_id: req.user._id})
+        .sort('-createdAt')
+        .exec(function (err, orders) {
+            if (err) {
+                res.status(500).send();
+            } else {
+                res.render('site/profile', {
+                    user: req.user,
+                    orders: orders
+                });
+            }
+        });
 });
 
 module.exports = router;

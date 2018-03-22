@@ -1,6 +1,8 @@
+let Order = require('../models/order');
+
 // Access Control
-function ensureAuthenticated(req, res, next){
-    if(req.isAuthenticated()){
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
         return next();
     } else {
         req.flash('danger', 'Please login');
@@ -8,6 +10,67 @@ function ensureAuthenticated(req, res, next){
     }
 }
 
+function ensureManager(req, res, next) {
+    if (req.isAuthenticated() && req.user.status > 2) {
+        return next();
+    } else {
+        res.render('error', {
+            message: 'Not Authorized',
+            error: {status: 'Code: 403', stack: 'You do not have permissions to view this page.'}
+        });
+    }
+}
+
+function ensureSubscriber(req, res, next) {
+    if (req.isAuthenticated() && req.user.status > 1) {
+        return next();
+    } else {
+        res.render('error', {
+            message: 'Not Authorized',
+            error: {status: 'Code: 403', stack: 'You do not have permissions to view this page.'}
+        });
+    }
+}
+
+function ensureAdmin(req, res, next) {
+    if (req.isAuthenticated() && req.user.status === 4) {
+        return next();
+    } else {
+        res.render('error', {
+            message: 'Not Authorized',
+            error: {status: 'Code: 403', stack: 'You do not have permissions to view this page.'}
+        });
+    }
+}
+
+function payedResource(req, res, next) {
+
+    if (req.isAuthenticated()) {
+        if (req.user.status > 2) {
+            return next();
+        }
+        Order.findOne({user_id: req.user._id, cfg_id : req.params.id}).exec(function (err, doc) {
+            if (!err && doc.payed !== false && doc.payed !== undefined) {
+                return next();
+            } else {
+                res.render('error', {
+                    message: 'Restricted resource',
+                    error: {status: 'Code: 402', stack: 'There are no payments recieved for this data.'}
+                });
+            }
+        });
+    } else {
+        res.render('error', {
+            message: 'Not Authorized',
+            error: {status: 'Code: 403', stack: 'You do not have permissions to view this page.'}
+        });
+    }
+}
+
 module.exports = {
-    ensureAuthenticated: ensureAuthenticated
+    ensureAuthenticated: ensureAuthenticated,
+    ensureManager: ensureManager,
+    ensureSubscriber: ensureSubscriber,
+    ensureAdmin: ensureAdmin,
+    payedResource: payedResource
 };

@@ -7,7 +7,7 @@ block content
             div.margin-bottom
                 h5 Pages:
                 if (page_id > pagesarr[0])
-                    a(href='/posts/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
+                    a(href='/users/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
                     span &nbsp;&nbsp;
                 else
                     span.hint.glyphicon.glyphicon-arrow-left(style='color:lightgray')
@@ -16,10 +16,10 @@ block content
                     if (page == page_id)
                         span: b #{page}&nbsp;
                     else
-                        span: a(href='/posts/all/page/' + page)= page
+                        span: a(href='/users/all/page/' + page)= page
                         span &nbsp;
                 if (page_id < pagesarr.length)
-                    a(href='/users/control/page/' + (parseInt(page_id)+1)): span.hint.glyphicon.glyphicon-arrow-right
+                    a(href='/users/all/page/' + (parseInt(page_id)+1)): span.hint.glyphicon.glyphicon-arrow-right
                 else
                     span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
 
@@ -30,6 +30,7 @@ block content
                         th Login
                         th Name
                         th Email
+                        th Phone
                         th Status
                         th Balance
                         th Reputation
@@ -37,23 +38,31 @@ block content
                         th Registered
                 tbody
                     each user, i in users
-                        if (user.status > 1)
-                            - color = 'lime'
-                        else
-                            - color = ''
-                        tr(style='color: ' + color)
-                            td: a(href='#'): b= user.login
+                        tr
+                            td: a(href='/users/view/'+user._id): b.text-capitalize= user.login
                             td= user.name
                             td= user.email
-                            td= user.status
+                            td= user.phone
+                            td
+                                case user.status
+                                    when 1
+                                        span User
+                                    when 2
+                                        span.status-su Subscriber
+                                    when 3
+                                        span.status-mn Manager
+                                    when 4
+                                        span.status-adm Administrator
+                                    default
+                                        span strange status...
+                            td= user.paid_till
                             td= user.balance
                             td= user.reputation
-                            td= user.paid_till
                             td= user.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')
             div
                 h5 Pages:
                     if (page_id > pagesarr[0])
-                        a(href='/posts/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
+                        a(href='/users/all/page/' + (parseInt(page_id) - 1)): span.hint.glyphicon.glyphicon-arrow-left
                         span &nbsp;
                     else
                         span.hint.glyphicon.glyphicon-arrow-left(style='color:lightgray')
@@ -62,10 +71,10 @@ block content
                         if (page == page_id)
                             span: b #{page}&nbsp;
                         else
-                            span: a(href='/posts/all/page/' + page)= page
+                            span: a(href='/users/all/page/' + page)= page
                             span &nbsp;
                     if (page_id < pagesarr.length)
-                        a(href='/posts/all/page/' + (parseInt(page_id) + 1)): span.hint.glyphicon.glyphicon-arrow-right
+                        a(href='/users/all/page/' + (parseInt(page_id) + 1)): span.hint.glyphicon.glyphicon-arrow-right
                     else
                         span.hint.glyphicon.glyphicon-arrow-right(style='color:lightgray')
         div.col-lg-4
