@@ -28,6 +28,14 @@ let orderSchema = mongoose.Schema({
             type: Boolean,
             default: false
         },
+        balance: {
+            type: Number,
+            required: true
+        },
+        send_payment: {
+            type: Boolean,
+            default: false
+        },
         comment: {
             type: String
         }

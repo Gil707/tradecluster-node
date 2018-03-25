@@ -14,10 +14,11 @@ block content
                 br
                 div.panel.panel-default
                     div.panel-body
-                        h4 Please send #{botcfg.cost} BTC to&nbsp;
-                            b(style='color: #5cd65c; margin: 0 8px;')= botorder.addr
-                            span &nbsp;and then click&nbsp;&nbsp;
-                            input(type='button', value='Confirm', style='margin-bottom: 5px; font-size: 18px; font-weight: bold').btn.btn-success
+                        form(method='POST', action='/orders/confirmpayment/' + botorder._id)
+                            h4 Please send #{botcfg.cost} BTC to&nbsp;
+                                b(style='color: #5cd65c; margin: 0 8px;')= botorder.addr
+                                span &nbsp;and then click&nbsp;&nbsp;
+                                input(type='submit', value='Confirm', style='margin-bottom: 5px; font-size: 18px; font-weight: bold').btn.btn-success
                         div
                             p Confirmation of payment will send to your email with activating link.
                             p After activation you'll get access for config in your cabinet.

@@ -12,7 +12,7 @@ router.get('/refresh', function (req, res) {
 
     CryptoNews.find(filter)
         .sort('-createdAt')
-        .limit(10)
+        .limit(8)
         .exec(function (err, cryptonewsblock) {
             if (err) {
                 console.log(err);

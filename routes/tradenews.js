@@ -11,7 +11,7 @@ router.get('/refresh', function (req, res) {
 
     TradeNews.find(filter)
         .sort('-createdAt')
-        .limit(10)
+        .limit(8)
         .exec(function (err, tradenewsblock) {
             if (err) {
                 console.log(err);

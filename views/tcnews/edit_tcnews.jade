@@ -2,30 +2,30 @@ extends ../layout
 
 block content
     h1 #{title}
-    form(method='POST', action='/posts/edit/'+post._id)
+    form(method='POST', action='/tcnews/edit/'+tcnews._id)
         div.row
             div.col-lg-9
                 div.form-group-sm
                     label Caption:
-                    input.form-control(type='text', name='caption', value=post.caption)
+                    input.form-control(type='text', name='caption', value=tcnews.caption)
                 div.form-group-sm
                     label Preview:
-                    textarea.form-control(name='preview', id='post-preview-edit') !{post.preview}
+                    textarea.form-control(name='preview', id='tcnews-preview-edit') !{tcnews.preview}
                 div.form-group-sm
                     label Additional text:
-                    textarea.form-control(name='text', id='post-text-edit') !{post.text}
+                    textarea.form-control(name='text', id='tcnews-text-edit') !{tcnews.text}
                 br
                 input.btn.btn-primary(type='submit', value='Submit')
             div.col-lg-3
 
     script(src='/js/ckeditor/ckeditor.js')
     script.
-        CKEDITOR.replace('post-text-edit', {
+        CKEDITOR.replace('tcnews-text-edit', {
             toolbar: 'Full',
             height: '1200px'
         })
     script.
-        CKEDITOR.replace('post-preview-edit', {
+        CKEDITOR.replace('tcnews-preview-edit', {
             toolbar: 'Basic',
             height: '440px'
         })

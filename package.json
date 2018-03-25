@@ -20,10 +20,10 @@
     "express-fileupload": "^0.4.0",
     "express-messages": "^1.0.1",
     "express-session": "^1.15.6",
-    "express-validator": "^5.0.1",
+    "express-validator": "^5.0.3",
     "jade": "~1.11.0",
     "mkdirp": "^0.5.1",
-    "mongoose": "^5.0.6",
+    "mongoose": "^5.0.11",
     "mongoose-observer": "^0.2.1",
     "mongoose-paginate": "^5.0.3",
     "mongoose-session": "0.0.4",
@@ -34,8 +34,9 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "recaptcha": "^1.2.1",
-    "request": "^2.83.0",
+    "request": "^2.85.0",
     "request-promise": "^4.2.2",
+    "sendmail": "^1.4.1",
     "serve-favicon": "~2.4.5"
   }
 }

@@ -49,12 +49,35 @@ router.get('/haas', auth.ensureAuthenticated, function (req, res) {
             if (err) {
                 console.log(err);
             } else {
-                res.render('botconfig/haas', {
-                    title: 'Haas',
-                    user: req.user,
-                    haascfgs: botcfgs.filter((data) => (data.cost === 0 || data.cost === null)),
-                    haascfgs_p: botcfgs.filter((data) => (data.cost > 0))
-                });
+                Order
+                    .find()
+                    .select('-_id')
+                    .select('cfg_id')
+                    .where('user_id').equals(req.user.id)
+                    .exec(function (err, payed_cfgs) {
+                        //
+                        // let ar = (payed_cfgs.map(a => a.cfg_id));
+                        // let ar2 = (botcfgs.filter((data) => (data.cost > 0))).map(a => (a._id).toString());
+                        //
+                        // console.log(ar);
+                        // console.log(ar2);
+                        //
+                        // ar2.forEach(function (e) {
+                        //     console.log(ar.indexOf(e))
+                        // });
+                        //
+                        // // payed_cfgs.indexOf(haascfg_p._id) > 0);
+
+                        if (!err) {
+                            res.render('botconfig/haas', {
+                                title: 'Haas',
+                                user: req.user,
+                                haascfgs: botcfgs.filter((data) => (data.cost === 0 || data.cost === null)),
+                                haascfgs_p: botcfgs.filter((data) => (data.cost > 0)),
+                                payed_cfgs: (payed_cfgs).map(a => a.cfg_id)
+                            });
+                        }
+                    });
             }
         });
 });
@@ -217,21 +240,21 @@ router.get('/delete/:id', auth.ensureManager, function (req, res) {
 // Get BotConfig
 router.get('/:id', auth.payedResource, function (req, res, next) {
 
-        BotConfig.findById(req.params.id, function (err, botcfg) {
-            if (botcfg) {
-                User.findById(botcfg.author, function (err, user) {
-                    if (err) {
-                        res.status(500).send();
-                    } else {
-                        res.render('botconfig/botconf', {
-                            username: user.name,
-                            botcfg: botcfg
-                        });
-                    }
-                });
-            }
-            else res.status(500).send();
-        });
+    BotConfig.findById(req.params.id, function (err, botcfg) {
+        if (botcfg) {
+            User.findById(botcfg.author, function (err, user) {
+                if (err) {
+                    res.status(500).send();
+                } else {
+                    res.render('botconfig/botconf', {
+                        username: user.name,
+                        botcfg: botcfg
+                    });
+                }
+            });
+        }
+        else res.status(500).send();
+    });
 });
 
 // Post Order
@@ -246,12 +269,14 @@ router.get('/buy/:id', auth.ensureAuthenticated, function (req, res) {
                 order.type = 1;
                 order.cfg_id = botcfg._id;
                 order.cfg_name = botcfg.name;
+                order.balance = - botcfg.cost;
                 order.addr = '1GMnp2zKcBr2SctLA1magPr9rSXHriLSz5';
+
 
                 order.save(function (err) {
                     if (err) {
-                        req.flash('error', 'You already bought this');
-                        res.redirect('/botconfigs/' + botcfg.bot);
+                        req.flash('error', 'You already bought this, if you don`t see config may be we didn`t recieve the payment. Please go to profile and check this.');
+                        res.redirect('/botconfigs/' + order.cfg_id);
                         // res.status(500).send();
                     } else {
                         req.flash('success', 'Order placed');
@@ -267,7 +292,6 @@ router.get('/buy/:id', auth.ensureAuthenticated, function (req, res) {
         else res.status(500).send();
     });
 });
-
 
 function fillHaasCfg(req) {
 

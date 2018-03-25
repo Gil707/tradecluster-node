@@ -5,20 +5,20 @@ block content
         div.row
             div.col-lg-8
                 a(href='javascript:history.back()').glyphicon.glyphicon-arrow-left.backtobotcfs &nbsp;
-                h1= post.caption
+                h1= tcnews.caption
                 hr
-                p!= post.preview
-                p!= post.text
+                p!= tcnews.preview
+                p!= tcnews.text
                 hr
                 h5.label.label-info Written by &nbsp;
                     b #{username}
                 if (user.status > 2)
-                    if (user._id.equals(post.author))
+                    if (user._id.equals(tcnews.author))
                         div
                             br
-                            a.btn.btn-default(href='/posts/edit/'+post._id) Edit
+                            a.btn.btn-default(href='/tcnews/edit/'+tcnews._id) Edit
                             i &nbsp;
-                            a.btn.btn-danger(href='/posts/delete/'+post._id) Delete
+                            a.btn.btn-danger(href='/tcnews/delete/'+tcnews._id) Delete
             div.col-lg-offset-4
     else
         a.btn-sm.btn-default(href='/users/login') Please login to view details.

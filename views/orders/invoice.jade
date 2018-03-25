@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+    if (user)
+        div.row
+            div.col-lg-8
+                h2.text-capitalize
+                    a(href='javascript:history.back()').glyphicon.glyphicon-arrow-left.backtobotcfs
+                    span &nbsp; #{config.name}&nbsp;
+                    span(style='font-size: 13px; color: #c2c2d6') ver. : #{config.version}
+                h4.text-capitalize For&nbsp;
+                    b= config.bot
+                div.hint Order placed at: #{order.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
+                br
+                div.panel.panel-default
+                    div.panel-body
+                        h4 Please send #{config.cost} BTC to&nbsp;
+                            b(style='color: #5cd65c; margin: 0 8px;')= order.addr
+                            span &nbsp;and then click&nbsp;&nbsp;
+                            input(type='button', value='Confirm', style='margin-bottom: 5px; font-size: 18px; font-weight: bold').btn.btn-success
+                        div
+                            p Confirmation of payment will send to your email with activating link.
+                            p After activation you'll get access for config in your cabinet.
+                br
+                p Thank you for purchasing. Contact us for any support.
+    else
+        a.btn-sm.btn-default(href='/users/login') Please login to view details.

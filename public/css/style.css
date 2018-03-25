@@ -423,3 +423,22 @@ hr {
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.restrict-btn {
+    color: #d2ff4d;
+}
+
+.allow-btn {
+    color: #ff9999;
+}
+
+.restrict-btn:hover{
+    text-decoration: none;
+    color: #dfff80;
+}
+
+.allow-btn:hover{
+    text-decoration: none;
+    color: #34c4da;
+
+}

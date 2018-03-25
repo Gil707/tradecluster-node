@@ -8,6 +8,7 @@ block content
     div.row
         div.col-lg-2
             h3 Profile
+            hr
             form(method='POST', action='/users/edit/' + user._id)
             div.form-group-sm
                 label Name:
@@ -15,6 +16,9 @@ block content
             div.form-group-sm
                 label E-mail:
                 input.form-control(type='text', name='caption', value=userProfile.email)
+            div.form-group-sm
+                label Phone:
+                input.form-control(type='text', name='caption', value=userProfile.phone)
             div.form-group-sm
                 label Change password:
                 input.form-control(type='text', name='caption')
@@ -36,8 +40,9 @@ block content
                 input.form-control(type='text', name='caption', value=userProfile.reputation)
             br
             input.btn.btn-primary(type='submit', value='Save')
-        div.col-lg-7
+        div.col-lg-7#usr_orders
             h3 Order history
+            hr
             table.table.table-responsive.table-darkstyle
                 thead
                     tr
@@ -45,9 +50,10 @@ block content
                         th Type
                         th Name
                         th Requisites
+                        th Balance
                         th Payed
                         th Comment
-                tbody
+                tbody#allow_restr_cfg
                     each order, i in orders
                         tr
                             td= order.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')
@@ -63,10 +69,22 @@ block content
                                         span Post
                                     default
                                         span strange type...
-                            td: a(href='/botconfigs/' + order.cfg_id)= order.cfg_name
+                            td: a(href='/botconfigs/' + order.cfg_id).text-uppercase= order.cfg_name
                             td= order.addr
-                            td= order.payed
+                            td= order.balance
+                                span.hint BTC
+                            td
+                                if (order.payed)
+                                    a.glyphicon.glyphicon-ok(href='', x-target= order._id, action='restrict').restrict-btn
+                                else
+                                    if (!order.send_payment)
+                                        i(style='color: #5c5c8a').glyphicon.glyphicon-remove
+                                        span.hint Awaiting payment
+                                    else
+                                        a.glyphicon.glyphicon-remove(href='', x-target= order._id, action='allow').allow-btn
+                                        span.hint Payed
                             td= order.comment
 
         div.col-lg-3
             h3 Activity
+            hr

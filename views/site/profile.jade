@@ -10,19 +10,21 @@ block content
                 table.table.table-responsive.table-darkstyle
                     thead
                         tr
+                            //th #
                             th Date
                             th Type
                             th Name
-                            th Requisites
+                            th Balance
                             th Payed
                             th Comment
                     tbody
-                        each order in orders
+                        each order, i in orders
                             if (order.payed)
                                 - color = '#66ff33'
                             else
                                 - color = '#ff9999'
                             tr(style='color:' + color)
+                                //td= (i+1)
                                 td= order.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')
                                 td
                                     case order.type
@@ -36,13 +38,21 @@ block content
                                             span Post
                                         default
                                             span strange type...
-                                td: a(href='/botconfigs/' + order.cfg_id): b.text-uppercase= order.cfg_name
-                                td= order.addr
+                                td
+                                    if (order.payed)
+                                        a(href='/botconfigs/' + order.cfg_id): b.text-uppercase= order.cfg_name
+                                    else
+                                        b.text-uppercase(style='color: gray')= order.cfg_name
+                                td= order.balance
                                 td
                                     if (order.payed)
                                         i.glyphicon.glyphicon-ok
                                     else
                                         i.glyphicon.glyphicon-remove
+                                        if (!order.send_payment)
+                                            a(href='/orders/invoice/' + order._id).hint Invoice
+                                        else
+                                            span.hint Checking payment...
                                 td= order.comment
         div.col-lg-2.padding-left-20
             h3 Profile

@@ -18,7 +18,7 @@ router.get('/all/page/:id', function (req, res) {
         if (!err) {
 
             let pagesarr = [];
-            for(let i = 1; i <= result.pages; i++) {
+            for (let i = 1; i <= result.pages; i++) {
                 pagesarr.push(i)
             }
 
@@ -36,7 +36,7 @@ router.get('/all/page/:id', function (req, res) {
 });
 
 // Add Route
-router.get('/add', auth.ensureAuthenticated, function (req, res) {
+router.get('/add', auth.ensureManager, function (req, res) {
     TcNews.find({})
         .sort('-createdAt')
         .exec(function (err, tcnews) {
@@ -53,7 +53,7 @@ router.get('/add', auth.ensureAuthenticated, function (req, res) {
 });
 
 // Add Submit POST Route
-router.post('/add', function (req, res) {
+router.post('/add', auth.ensureManager, function (req, res) {
     req.checkBody('caption', 'Caption is required').notEmpty();
     req.checkBody('preview', 'Preview is required').notEmpty();
 
@@ -84,14 +84,11 @@ router.post('/add', function (req, res) {
 });
 
 // Load Edit Form
-router.get('/edit/:id', auth.ensureAuthenticated, function (req, res) {
+router.get('/edit/:id', auth.ensureManager, function (req, res) {
 
     TcNews.findById(req.params.id, function (err, tcnews) {
         if (err) {
             return console.log(err)
-        } else if (!(req.user._id.equals(tcnews.author)) || !(req.user.login === 'admin')) {
-            req.flash('danger', 'Not Authorized');
-            res.redirect('/');
         } else {
             res.render('tcnews/edit_tcnews', {
                 title: 'Edit TcNews',
@@ -102,7 +99,7 @@ router.get('/edit/:id', auth.ensureAuthenticated, function (req, res) {
 });
 
 // Update Submit POST Route
-router.post('/edit/:id', function (req, res) {
+router.post('/edit/:id', auth.ensureManager, function (req, res) {
     let tcnews = {};
     tcnews.caption = req.body.caption;
     tcnews.author = req.user._id;
@@ -116,30 +113,23 @@ router.post('/edit/:id', function (req, res) {
             return console.log(err);
         } else {
             req.flash('success', 'TcNews Updated');
-            res.redirect('/tcnewss/add');
+            res.redirect('/tcnews/add');
         }
     });
 });
 
 // Delete TcNews
-router.get('/delete/:id', function (req, res) {
-    TcNews.findById(req.params.id, function (err, tcnews) {
-        
-        if (req.user._id.equals(tcnews.author) || req.user.status === 4) {
-            TcNews.findById(req.params.id).remove().exec(function (err, data) {
-                if (!err) {
-                    req.flash('success', 'TcNews Deleted');
-                    res.redirect('/tcnewss/add');
-                }
-            });
-        } else {
-            res.status(500).send();
+router.get('/delete/:id', auth.ensureManager, function (req, res) {
+    TcNews.findById(req.params.id).remove().exec(function (err, data) {
+        if (!err) {
+            req.flash('success', 'TcNews Deleted');
+            res.redirect('/tcnewss/add');
         }
     });
 });
 
 // Get Single TcNews
-router.get('/:id', function (req, res) {
+router.get('/:id', auth.ensureAuthenticated, function (req, res) {
     TcNews.findById(req.params.id, function (err, tcnews) {
         if (tcnews) {
             User.findById(tcnews.author, function (err, user) {

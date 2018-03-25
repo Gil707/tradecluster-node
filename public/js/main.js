@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
     $('#botcfg-addblock').load('/botconfigs/admin/forms/' + $('#botselector').val());
@@ -20,11 +19,56 @@ $(document).ready(function () {
     });
 });
 
-$('#botselector').change(function () {
-        $('#botcfg-addblock').load('/botconfigs/admin/forms/' + $(this).val());
+
+$('#allow_restr_cfg').click(function (e) {
+    let target = $(e.target);
+    $.ajax({
+        type: 'POST',
+        url: '/orders/changeaccess/' + target.attr('x-target') + '/' + target.attr('action'),
+        success: function (data) {
+            $("#usr_orders").load(location.href + " #usr_orders>*", "");
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
 });
 
-$("#freeblock").click(function(){
+
+$('#allowaccess').click(function (e) {
+    console.log($(this).attr('x-target'));
+    $.ajax({
+        type: 'POST',
+        url: '/orders/allowaccess/' + $(this).attr('x-target'),
+        success: function (data) {
+            $("#usr_orders").load(location.href + " #usr_orders>*", "");
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+});
+
+$('#restrictaccess').click(function (e) {
+    console.log($(this).attr('x-target'));
+
+    $.ajax({
+        type: 'POST',
+        url: '/orders/restrictaccess/' + $(this).attr('x-target'),
+        success: function (data) {
+            $("#usr_orders").load(location.href + " #usr_orders>*", "");
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+});
+
+$('#botselector').change(function () {
+    $('#botcfg-addblock').load('/botconfigs/admin/forms/' + $(this).val());
+});
+
+$("#freeblock").click(function () {
     if ($("#freeblock-list").css('display') === 'none') {
         $("#freeblock-list").show(500);
         $("#freeblock-hint").hide();
@@ -34,7 +78,7 @@ $("#freeblock").click(function(){
     }
 });
 
-$("#chargeableblock").click(function(){
+$("#chargeableblock").click(function () {
     if ($("#chargeableblock-list").css('display') === 'none') {
         $("#chargeableblock-list").show(500);
         $("#chargeableblock-hint").hide();
@@ -67,7 +111,6 @@ function loadNews() {
     $('#cryptonews-div').load('/cryptonews/refresh');
     $('#tradenews-div').load('/tradenews/refresh');
 }
-
 
 
 loadNews();

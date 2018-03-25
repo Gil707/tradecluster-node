@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+ObjectId = mongoose.Types.ObjectId;
 
 // BotConfig Schema
 let botconfigSchema = mongoose.Schema({
