@@ -90,12 +90,11 @@ function parseCoindesk() {
             let cryptonews = new CryptoNews();
 
             cryptonews.title = block.find('div.post-info').find('a.fade').text();
-            cryptonews.img = block.find('img.wp-post-image').attr('data-cfsrc');
+            cryptonews.img = block.find('a.fade').find('img').attr('data-src');
             cryptonews.link = block.find('a.fade').attr('href');
             cryptonews.preview = block.find('p').last().text();
             cryptonews.time = block.find('p').first().text();
             cryptonews.resource = 'coindesk.com';
-
 
             CryptoNews.find({title: cryptonews.title}, function (err, docs) {
                 if (err) {

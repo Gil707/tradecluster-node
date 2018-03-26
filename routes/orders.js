@@ -3,7 +3,11 @@ const router = express.Router();
 const auth = require('../components/auth');
 const env = require('../config/env');
 // const cfgreciever = require('../components/cfgreciever');
-const sendmail = require('sendmail')();
+
+let send = require('gmail-send')({
+    user: env.gmailUser,
+    pass: env.gmailPass
+});
 
 let Order = require('../models/order');
 let BotConfig = require('../models/botconfig');
@@ -30,29 +34,68 @@ router.post('/changeaccess/:id/:action', auth.ensureManager, function (req, res)
 
     let allow = (req.params.action === 'allow');
 
-    if (allow) {
-        sendmail({
-            from: env.noReplyEmail,
-            to: 'kuzclan@mail.ru',
-            subject: 'Access to config (' + req.params.id + ') allowed',
-            html: 'Please go to <a href="http://localhost:3000/botconfigs/' + req.params.id + '">Config</a>',
-        }, function (err, reply) {
-            console.log(err && err.stack);
-            console.dir(reply);
-        });
-    }
+    Order.findById(req.params.id, function (err, order) {
+        if (!err) {
+            BotConfig.findById(order.cfg_id, function (err, botcfg) {
 
-    Order.findByIdAndUpdate(req.params.id, {payed: allow, balance: 0}, function (err) {
-        if (err) {
-            res.render('error', {
-                message: 'Internal error',
-                error: {status: 'Code: 500', stack: 'Something goes wrong.'}
+                if (allow) {
+                    order.balance = 0;
+                    order.payed = true;
+                } else {
+                    order.balance = -botcfg.cost;
+                    order.payed = false;
+                }
+
+                order.save(function (err) {
+                    if (err) {
+                        res.render('error', {
+                            message: 'Internal error',
+                            error: {status: 'Code: 500', stack: 'Something goes wrong.'}
+                        });
+                    } else {
+                        if (allow) {
+                            send({
+                                to: 'kuzclan@mail.ru',
+                                subject: env.gmailSubject + 'Access to ' + botcfg.name + ' config for ' + botcfg.bot + ' granted.',
+                                html: env.gmailHtml + '<p>Hi, new option unlocked in your <a href="http://localhost:3000/profile" target="_blank">profile</a></p> ' +
+                                '<p>Or go directly to your <span style="text-transform: uppercase; font-weight: bold">' +
+                                botcfg.name + '</span> v.: ' + botcfg.version + ' (' + botcfg.bot + ') ' +
+                                '<a href="http://localhost:3000/botconfigs/' + botcfg._id + '" target="_blank">config</a></p>' +
+                                '<br><h3>Thank you for purchasing our products.</h3>' +
+                                env.gmailHtmlFooter
+                            }, function (err, res) {
+                                console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
+                            });
+                        }
+                    }
+                })
             });
         }
-        // else {
-        // res.redirect('/');
-        // }
-    })
+
+        else console.log(err);
+    });
+
+    // Order.findByIdAndUpdate(req.params.id, {payed: allow, balance: 0}, function (err) {
+    //     if (err) {
+    //         res.render('error', {
+    //             message: 'Internal error',
+    //             error: {status: 'Code: 500', stack: 'Something goes wrong.'}
+    //         });
+    //     }
+    //     else {
+    //         if (allow) {
+    //             send({
+    //                 to: 'kuzclan@mail.ru',
+    //                 subject: env.gmailSubject + 'Access to config granted.',
+    //                 html: env.gmailHtml + '<p>Please check your <a href="http://localhost:3000/profile" target="_blank">profile</a></p>' +
+    //                 '<p>Thank you for purchasing our products.</p>' +
+    //                 env.gmailHtmlFooter
+    //             }, function (err, res) {
+    //                 console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
+    //             });
+    //         }
+    //     }
+    // })
 });
 
 
