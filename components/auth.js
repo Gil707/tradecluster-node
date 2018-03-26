@@ -52,10 +52,13 @@ function payedResource(req, res, next) {
         Order.findOne({user_id: req.user._id, cfg_id : req.params.id}).exec(function (err, doc) {
             if (!err && doc.payed !== false && doc.payed !== undefined) {
                 return next();
+            }  else if (!err && doc.send_payment === false && doc.payed === false) {
+                req.flash('warning', 'You already request this config. Please pay in invoice.');
+                res.redirect('/orders/invoice/' + doc._id);
             } else {
                 res.render('error', {
                     message: 'Restricted resource',
-                    error: {status: 'Code: 402', stack: 'There are no payments recieved for this data.'}
+                    error: {status: 'Code: 402', stack: 'Please wait while we check the payment.'}
                 });
             }
         });

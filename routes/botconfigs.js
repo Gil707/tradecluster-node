@@ -54,20 +54,8 @@ router.get('/haas', auth.ensureAuthenticated, function (req, res) {
                     .select('-_id')
                     .select('cfg_id')
                     .where('user_id').equals(req.user.id)
+                    .where({'send_payment' : true})
                     .exec(function (err, payed_cfgs) {
-                        //
-                        // let ar = (payed_cfgs.map(a => a.cfg_id));
-                        // let ar2 = (botcfgs.filter((data) => (data.cost > 0))).map(a => (a._id).toString());
-                        //
-                        // console.log(ar);
-                        // console.log(ar2);
-                        //
-                        // ar2.forEach(function (e) {
-                        //     console.log(ar.indexOf(e))
-                        // });
-                        //
-                        // // payed_cfgs.indexOf(haascfg_p._id) > 0);
-
                         if (!err) {
                             res.render('botconfig/haas', {
                                 title: 'Haas',
@@ -271,11 +259,9 @@ router.get('/buy/:id', auth.ensureAuthenticated, function (req, res) {
                 order.cfg_name = botcfg.name;
                 order.balance = - botcfg.cost;
                 order.addr = '1GMnp2zKcBr2SctLA1magPr9rSXHriLSz5';
-
-
                 order.save(function (err) {
                     if (err) {
-                        req.flash('error', 'You already bought this, if you don`t see config may be we didn`t recieve the payment. Please go to profile and check this.');
+                        // req.flash('error', 'You already bought this, if you don`t see config may be we didn`t recieve the payment. Please go to profile and check this.');
                         res.redirect('/botconfigs/' + order.cfg_id);
                         // res.status(500).send();
                     } else {
