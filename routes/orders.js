@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../components/auth');
 const env = require('../config/env');
+let logger = require('../config/log');
 // const cfgreciever = require('../components/cfgreciever');
 
 let send = require('gmail-send')({
@@ -48,6 +49,7 @@ router.post('/changeaccess/:id/:action', auth.ensureManager, function (req, res)
 
                 order.save(function (err) {
                     if (err) {
+                        logger.error('Internal error:' + err);
                         res.render('error', {
                             message: 'Internal error',
                             error: {status: 'Code: 500', stack: 'Something goes wrong.'}
@@ -64,7 +66,7 @@ router.post('/changeaccess/:id/:action', auth.ensureManager, function (req, res)
                                 '<br><h3>Thank you for purchasing our products.</h3>' +
                                 env.gmailHtmlFooter
                             }, function (err, res) {
-                                console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
+                                logger.info('Mail send to kuzclan@mail.ru, access to cfg_id: ' + botcfg._id + ' granted. Callback returned: err:' + err + '; res:' + res);
                             });
                         }
                     }
