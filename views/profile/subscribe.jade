@@ -1,0 +1,103 @@
+extends ../layout
+
+block content
+    h2 Become a subscriber
+    div.row
+        div.col-lg-8
+            h3 Please choose payment type
+            br
+            h4(id='btc-s-payment'): span.btc-s-payment Bitcoin
+                span.hint.glyphicon.glyphicon-btc
+                span(id='btc-s-payment-hint').hint &nbsp;click to view details
+            div(id='btc-s-payment-list', style='display:none')
+                div.panel.panel-default
+                    div.panel-body
+                        //form(method='POST', id='subscr-pay-btc')
+                            h4 Please send #0.004 BTC to&nbsp;
+                                b(style='color: #5cd65c; margin: 0 8px;')= btcaddr
+                                span &nbsp;and then click&nbsp;&nbsp;
+                                input(type='button', id='subscr-pay-btc-btn', value='Confirm', style='margin-bottom: 5px; font-size: 18px; font-weight: bold').btn.btn-sm.btn-success
+                        div
+                            p You become a subscriber immediately after we recieved payment You`ll get email about this.
+
+            hr
+
+            h4(id='bank-s-payment'): span.bank-s-payment Bank transfer
+                span.hint.glyphicon.glyphicon-euro
+                span.hint.glyphicon.glyphicon-ruble
+                span(id='bank-s-payment-hint').hint &nbsp;click to view details
+            div(id='bank-s-payment-list', style='display:none')
+                div.panel.panel-default
+                    div.panel-body
+                        div(id='tabs')
+                            ul.list-inline
+                                li.hint
+                                    a(href='#tabs-1') RUB
+                                li.hint
+                                    a(href='#tabs-2') EUR
+                            div(id='tabs-1')
+                                p Платеж в рублях Вы можете совершить на ряд реквизитов, представленных ниже
+                                div(id='cardtypes-tabs')
+                                    ul.list-inline#cardtypes-list
+                                        li.hint
+                                            a(href='#cardtypes-tabs-1').bank-payment-link Сбербанк
+                                        li.hint
+                                            a(href='#cardtypes-tabs-2').bank-payment-link Тинькофф
+                                        //li.hint
+                                        //    a(href='#cardtypes-tabs-3') Альфа-банк
+                                div(id='cardtypes-tabs-1', style='display: block').cardtype
+                                    p.padding-left-20
+                                        pre
+                                            h4 Сбербанк
+                                            | Номер карты: 4276 5500 2633 9625
+                                            | Гиль Евгений Олегович
+                                            | Номер счета карты: 40817810055031999129 (если потребуется)
+
+                                            | Банк получателя: Северо-Западный Банк ОАО "Сбербанк России" г. Санкт-Петербург
+                                            | ИНН 7707083893
+                                            | к/с 30101810500000000653 в ГРКЦ ГУ Банка России по г. Санкт-Петербургу
+                                            | БИК 044030653
+                                            | ОКПО 09171401
+                                            | ОКОНХ 96130
+                                            | КПП 783502001
+                                div(id='cardtypes-tabs-2').cardtype
+                                    p.padding-left-20
+                                        pre
+                                            h4 Tinkoff
+                                            | Номер карты: 5536 9137 6085 4196
+                                            | &nbsp;
+                                            | Банк получатель: АО «Тинькофф Банк»
+                                            | Корр. счёт 30101810145250000974
+                                            | БИК 044525974
+                                            | Получатель Гиль Евгений Олегович
+                                            | Счёт получателя платежа 40817810600004107151
+                                            | Назначение платежа Перевод средств по договору № 5052924486 Гиль Евгений Олегович НДС не облагается
+                                            | ИНН Укажите ваш ИНН, если его нет, поле оставьте пустым (при строгой необходимости заполнять поле – укажите 7710140679)
+                                            | КПП Поле оставьте пустым (при строгой необходимости заполнять поле – укажите 773401001)
+                                div(id='cardtypes-tabs-3').cardtype
+                                    p Alfa-bank
+
+                                form(method='POST', action='/profile/subscribe/confirm', encType='multipart/form-data')
+                                    label Период оплаты:
+                                    select.form-control(name='paym_interval', id='interval_select', style='width: 120px; display: inline-block; margin-left: 6px; margin-right: 18px;')
+                                        option(value="1", selected=) 1 мес.
+                                        option(value="2") 2 мес.
+                                        option(value="3") 3 мес.
+                                        option(value="6") 6 мес.
+                                        option(value="9") 9 мес.
+                                        option(value="12") 12 мес.
+                                    label Стоимость:
+                                    input.form-control(type='number', value='500.00', step='0.01', name='rub_cost', id='rub_cost_val', style='width: 100px; font-weight: bold; font-size: larger; color: #39e600; display: inline-block; background-color: #33334d; border: 0; border-radius: 0;')
+                                    b руб.
+                                    input(type='hidden', name='bank_currency', value='3')
+                                    p После завершение платежа прикрепите скан чека&nbsp;
+                                        input(type='file', name='bankinvfile', style='display: inline-block').upl-file
+                                        input(type='hidden' value='#cardtypes-tabs-1', name='bankreq', id='bank_target')
+                                        span &nbsp;и нажмите&nbsp;&nbsp;
+                                        input(type='submit', value='Подтвердить', style='margin-bottom: 5px; font-size: 18px; font-weight: bold').btn.btn-sm.btn-success
+
+                            div(id='tabs-2')
+                                p Unfortunately now we can't recieve money in EUR
+
+        div.col-lg-4
+

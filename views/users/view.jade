@@ -85,6 +85,34 @@ block content
                                         span.hint Payed
                             td= order.comment
 
-        div.col-lg-3
-            h3 Activity
+        div.col-lg-3#usr_subscribe
+            h3 Subscribe
             hr
+            if (subscribe)
+                ul.list-unstyled.margin-l-10#allow_subscribe
+                    li.list-group.margin-bottom Payed:&nbsp;
+                        if (subscribe.payed)
+                            a.glyphicon.glyphicon-ok(href='', x-target= subscribe._id, action='restrict').restrict-btn
+                        else
+                            a.glyphicon.glyphicon-remove(href='', x-target= subscribe._id, action='allow').allow-btn
+                            span.hint Payed
+                    li.list-group.margin-bottom  Interval: #{subscribe.interval} (m)
+                    li.list-group.margin-bottom  Cost: #{subscribe.cost}
+                    li.list-group.margin-bottom  Currency:&nbsp;
+                        case subscribe.currency
+                            when 1
+                                span BTC
+                            when 2
+                                span EUR
+                            when 3
+                                span RUB
+                            default
+                                span strange type...
+                    li.list-group.margin-bottom  Requisites: #{subscribe.requisites}
+                    li.list-group.margin-bottom  Receipt:&nbsp;
+                        a(href='/storage/subscribe/' + subscribe.receipt) view
+                    if (subscribe.paid_till)
+                        li.list-group.margin-bottom: b(style='color: #39e600') Paid till:&nbsp;
+                            b(style='font-size: 14px; color: #39e600')= subscribe.paid_till.toISOString().replace(/T/, ' ').replace(/\..+/, '')
+
+

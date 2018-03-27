@@ -364,7 +364,7 @@ hr {
 .upl-file {
     background-color: #33334d;
     border-radius: 3px;
-    padding: 3px;
+    padding: 1px;
     border: 1px solid #666699;
 }
 
@@ -424,6 +424,13 @@ hr {
     margin-right: 10px;
 }
 
+.margin-l-10 {
+    margin-left: 10px;
+}
+.margin-l-20 {
+    margin-left: 20px;
+}
+
 .restrict-btn {
     color: #d2ff4d;
 }
@@ -441,4 +448,41 @@ hr {
     text-decoration: none;
     color: #34c4da;
 
+}
+
+.btc-s-payment {
+    color: #ffb366;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.btc-s-payment:hover {
+    color: #ffcc99;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.bank-s-payment {
+    color: #00ff00;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.bank-s-payment:hover {
+    font-size: 24px;
+    color: #80ff80;
+    text-decoration: none;
+}
+
+.cardtype {
+    display: none;
+}
+
+.bank-payment-link:active {
+    color: #e8f2ff;
+}
+
+.hint-yel {
+    color: #ccff99;
+    font-size: 12px;
 }

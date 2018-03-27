@@ -23,6 +23,10 @@ let postSchema = mongoose.Schema({
         },
         text: {
             type: String
+        },
+        subscribe_only: {
+            type: Boolean,
+            default: false
         }
     },
     {

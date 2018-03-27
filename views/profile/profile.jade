@@ -77,14 +77,23 @@ block content
                         when 4
                             span.status-adm Admin
             div.form-group-sm
-                label Paid till:&nbsp;
-                span= user.paid_till
-            div.form-group-sm
                 label Balance:&nbsp;
                 span= user.balance
             div.form-group-sm
                 label Reputation:&nbsp;
                 span= user.reputation
+
+            hr
+            if (user.status < 2)
+                if (subscribe)
+                    if (subscribe.payed === false)
+                        span.hint-yel Subscriber status in processing. Checking payment.
+                else
+                    a(href='/profile/subscribe').btn.btn-sm.btn-success Become a subscriber
+            else
+                if (subscribe && subscribe.paid_till)
+                    p.hint(style='margin-left: 0') Your subscriber status remaining in #{subscribe.paid_till.toISOString().replace(/T/, ' ').replace(/\..+/, '')}.
+                    p.hint(style='margin-left: 0') You paid for #{subscribe.interval} months.
             //div.form-group-sm.ma
             //    label Change password:
             //    input.form-control(type='text', name='password_change')

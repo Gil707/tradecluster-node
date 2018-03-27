@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 let uniqueValidator = require('mongoose-unique-validator');
+ObjectId = mongoose.Types.ObjectId;
 
 // Order Schema
 let orderSchema = mongoose.Schema({
